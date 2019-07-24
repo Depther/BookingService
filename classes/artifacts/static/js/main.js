@@ -127,8 +127,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // 프로모션 영역 슬라이드 기능
 window.addEventListener('load', function() {
-	let firstItem = document.querySelector(".visual_img > .item:first-child");
-	firstItem.parentElement.appendChild(firstItem.cloneNode(true));
+	cloneItem();
+
 	let promotionItems = document.querySelectorAll(".visual_img > .item");
 	let len = promotionItems.length;
 	let count = 0;
@@ -146,6 +146,12 @@ window.addEventListener('load', function() {
 		}
 	}, 4000);
 });
+
+// 슬라이드를 부드럽게 처리하기 위해 복제요소를 추가하는 함수
+function cloneItem() {
+	let firstItem = document.querySelector(".visual_img > .item:first-child");
+	firstItem.parentElement.appendChild(firstItem.cloneNode(true));
+}
 
 // 프로모션 슬라이드 마지막 이미지 자연스럽게 처리하는 함수
 function controlEndImg(promotionItems, len) {
