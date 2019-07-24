@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import static me.depther.repository.CategoriesSqls.SELECT_ITEMS;
+
 @Repository
 public class CategoriesRepository {
 
@@ -15,8 +17,6 @@ public class CategoriesRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	private RowMapper<Category> rowMapper = BeanPropertyRowMapper.newInstance(Category.class);
-
-	private final String SELECT_ITEMS = "SELECT A.id, A.name, count(*) as count FROM category A, product B WHERE A.id = B.category_id GROUP BY B.category_id";
 
 	public CategoryResponse selectList() throws Exception {
 		return new CategoryResponse(jdbcTemplate.query(SELECT_ITEMS, rowMapper));

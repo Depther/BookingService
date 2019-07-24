@@ -1,8 +1,8 @@
 package me.depther.repository;
 
-public class ProductsSqls {
+class ProductsSqls {
 
-	public static final String SELECT_PART_COUNT =
+	static final String SELECT_PART_COUNT =
 			"SELECT count(*)" +
 			"  FROM category A, " +
 			"       product B, " +
@@ -16,7 +16,7 @@ public class ProductsSqls {
 			"   AND D.type = 'th'" +
 			"   AND A.id = ?";
 
-	public static final String SELECT_ALL_COUNT =
+	static final String SELECT_ALL_COUNT =
 			"SELECT count(*)" +
 			"  FROM category A, " +
 			"       product B, " +
@@ -29,7 +29,7 @@ public class ProductsSqls {
 			"   AND D.file_id = E.id" +
 			"   AND D.type = 'th'";
 
-	public static final String SELECT_PART_ITEMS =
+	static final String SELECT_PART_ITEMS =
 			"SELECT C.id as displayInfoId," +
 			"       C.place_name as placeName," +
 			"       B.content as productContent, " +
@@ -49,7 +49,7 @@ public class ProductsSqls {
 			"   AND A.id = ?" +
 			" LIMIT 4 OFFSET ?";
 
-	public static final String SELECT_ALL_ITEMS =
+	static final String SELECT_ALL_ITEMS =
 			"SELECT C.id as displayInfoId," +
 			"       C.place_name as placeName," +
 			"       B.content as productContent, " +

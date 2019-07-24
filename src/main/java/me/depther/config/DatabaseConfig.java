@@ -20,6 +20,29 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DatabaseConfig implements TransactionManagementConfigurer {
 
+	@Autowired
+	private HikariConfig hikariConfig;
+
+	@Bean
+	public DataSource dataSource() {
+		return new HikariDataSource(hikariConfig);
+	}
+
+	@Override
+	public PlatformTransactionManager annotationDrivenTransactionManager() {
+		return transactionManager();
+	}
+
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(dataSource());
+	}
+
+	@Bean
+	public JdbcTemplate jdbcTemplate() {
+		return new JdbcTemplate(dataSource());
+	}
+
 	@Configuration
 	@Profile("dev")
 	@PropertySource("classpath:/application.properties")
@@ -58,29 +81,6 @@ public class DatabaseConfig implements TransactionManagementConfigurer {
 			return hikariConfig;
 		}
 
-	}
-
-	@Autowired
-	private HikariConfig hikariConfig;
-
-	@Bean
-	public DataSource dataSource() {
-		return new HikariDataSource(hikariConfig);
-	}
-
-	@Override
-	public PlatformTransactionManager annotationDrivenTransactionManager() {
-		return transactionManager();
-	}
-
-	@Bean
-	public PlatformTransactionManager transactionManager() {
-		return new DataSourceTransactionManager(dataSource());
-	}
-
-	@Bean
-	public JdbcTemplate jdbcTemplate() {
-		return new JdbcTemplate(dataSource());
 	}
 
 }
