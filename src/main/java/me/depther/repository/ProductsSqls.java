@@ -10,7 +10,7 @@ class ProductsSqls {
 			" INNER JOIN product_image D ON B.id = D.product_id" +
 			" INNER JOIN file_info E ON D.file_id = E.id" +
 			" WHERE D.type = 'th'" +
-			"   AND A.id = ?";
+			"   AND A.id = :categoryId";
 
 	static final String SELECT_ALL_COUNT =
 			"SELECT count(*)" +
@@ -34,8 +34,8 @@ class ProductsSqls {
 			" INNER JOIN product_image D ON B.id = D.product_id" +
 			" INNER JOIN file_info E ON D.file_id = E.id" +
 			" WHERE D.type = 'th'" +
-			"   AND A.id = ? " +
-			" LIMIT 4 OFFSET ?";
+			"   AND A.id = :categoryId" +
+			" LIMIT 4 OFFSET :start";
 
 	static final String SELECT_ALL_ITEMS =
 			"SELECT C.id as displayInfoId," +
@@ -50,6 +50,6 @@ class ProductsSqls {
 			" INNER JOIN product_image D ON B.id = D.product_id" +
 			" INNER JOIN file_info E ON D.file_id = E.id" +
 			" WHERE D.type = 'th'" +
-			" LIMIT 4 OFFSET ?";
+			" LIMIT 4 OFFSET :start";
 
 }
