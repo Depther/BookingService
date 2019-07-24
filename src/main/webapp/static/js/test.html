@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+		<style>
+			div {
+				border: 1px solid red;
+				width: 100px;
+				height: 100px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			test
+		</div>
+
+		<script>
+			let div = document.querySelector("div");
+			div.style.transform = "translateX(-50%) translateY(75%)";
+			const regExp = /translateX\(.([0-9]+)%\)/;
+			console.log(div.style.transform);
+			console.log("asd" + div.style.transform.search(regExp));
+			let str = div.style.transform.match(regExp);
+			console.log(str);
+			console.log(str.input);
+
+			console.log(typeof str[1]);
+
+
+
+		</script>
+	</body>
+</html>

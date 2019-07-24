@@ -127,14 +127,32 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // 프로모션 영역 슬라이드 기능
 window.addEventListener('load', function() {
+	let firstItem = document.querySelector(".visual_img > .item:first-child");
+	firstItem.parentElement.appendChild(firstItem.cloneNode(true));
 	let promotionItems = document.querySelectorAll(".visual_img > .item");
+	let len = promotionItems.length;
 	let count = 0;
 
 	setInterval(function() {
 		count++;
-		let len = promotionItems.length;
-		let pos = count % len * 100;
-		while (len-- > 0)
-			promotionItems.item(len).style.transform = "translateX(-" + pos + "%)";
+		let xPos = count % len * 100;
+		for (let i = 0; i < len; i++) {
+			promotionItems.item(i).style.transition = "1s";
+			promotionItems.item(i).style.transform = "translateX(-" + xPos + "%)";
+		}
+		if (count % len === len - 1) {
+			controlEndImg(promotionItems, len);
+			count++;
+		}
 	}, 4000);
 });
+
+// 프로모션 슬라이드 마지막 이미지 자연스럽게 처리하는 함수
+function controlEndImg(promotionItems, len) {
+	setTimeout(function() {
+		for (let i = 0; i < len; i++) {
+			promotionItems.item(i).style.transition = "0s";
+			promotionItems.item(i).style.transform = "translateX(0%)";
+		}
+	}, 1000);
+}
