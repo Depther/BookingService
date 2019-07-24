@@ -20,12 +20,8 @@ import javax.sql.DataSource;
 @PropertySource("classpath:/application.properties")
 public class DatabaseConfig implements TransactionManagementConfigurer {
 
-	private Environment environment;
-
 	@Autowired
-	public DatabaseConfig(Environment environment) {
-		this.environment = environment;
-	}
+	private Environment environment;
 
 	@Bean
 	public HikariConfig hikariConfig() {
