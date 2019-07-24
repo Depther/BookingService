@@ -12,7 +12,6 @@ class ProductsSqls {
 			" WHERE D.type = 'th'" +
 			"   AND A.id = ?";
 
-
 	static final String SELECT_ALL_COUNT =
 			"SELECT count(*)" +
 			"  FROM category A" +
