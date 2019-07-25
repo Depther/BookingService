@@ -135,7 +135,7 @@
 		<!-- Product Template -->
 		<script id="template-product-item" type="text/template">
 			<li class="item">
-				<a href="detail.html?id={productId}" class="item_book">
+				<a href="/detail?id={productId}" class="item_book">
 					<div class="item_preview">
 						<img alt="{productDescription}" class="img_thumb"
 							 src="http://localhost:8080/{productImageUrl}">

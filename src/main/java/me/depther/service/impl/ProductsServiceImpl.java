@@ -1,5 +1,7 @@
 package me.depther.service.impl;
 
+import me.depther.model.Comment;
+import me.depther.model.DisplayInfoResponse;
 import me.depther.model.ProductResponse;
 import me.depther.repository.ProductsRepository;
 import me.depther.service.ProductsService;
@@ -22,6 +24,21 @@ public class ProductsServiceImpl implements ProductsService {
 			response.setTotalCount(productsRepository.selectAllCount());
 			response.setItems(productsRepository.selectAllList(start));
 		}
+		return response;
+	}
+
+	@Override
+	public DisplayInfoResponse getProductDetail(int displayInfoId) throws Exception {
+		DisplayInfoResponse response = new DisplayInfoResponse();
+		response.setDisplayInfo(productsRepository.selectDisplayInfo(displayInfoId));
+		response.setProductImages(productsRepository.selectProductImages(displayInfoId));
+		response.setDisplayInfoImage(productsRepository.selectDisplayInfoImage(displayInfoId));
+		response.setComments(productsRepository.selectComments(displayInfoId));
+		for (Comment e : response.getComments()) {
+			e.setCommentImages(productsRepository.selectCommentImages(e.getCommentId()));
+		}
+		response.setAverageScore(productsRepository.selectAvgScore(displayInfoId));
+		response.setProductPrices(productsRepository.selectProductPrices(displayInfoId));
 		return response;
 	}
 
