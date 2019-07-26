@@ -34,7 +34,7 @@ public class ProductsRepository {
 
 	private RowMapper<ProductPrice> productPriceRowMapper = BeanPropertyRowMapper.newInstance(ProductPrice.class);
 
-	public int selectPartCount(int categoryId) throws Exception {
+	public Integer selectPartCount(int categoryId) throws Exception {
 		return jdbcTemplate.queryForObject(SELECT_PART_COUNT, Collections.singletonMap("categoryId", categoryId), Integer.class);
 	}
 
@@ -45,7 +45,7 @@ public class ProductsRepository {
 		return jdbcTemplate.query(SELECT_PART_ITEMS, paramMap, productRowMapper);
 	}
 
-	public int selectAllCount() throws Exception {
+	public Integer selectAllCount() throws Exception {
 		return jdbcTemplate.queryForObject(SELECT_ALL_COUNT, Collections.emptyMap(), Integer.class);
 	}
 
@@ -73,7 +73,7 @@ public class ProductsRepository {
 		return jdbcTemplate.query(SELECT_COMMENT_IMAGES, Collections.singletonMap("commentId", commentId), commentImgRowMapper);
 	}
 
-	public double selectAvgScore(int displayInfoId) throws Exception {
+	public Double selectAvgScore(int displayInfoId) throws Exception {
 		return jdbcTemplate.queryForObject(SELECT_AVG_SCORE, Collections.singletonMap("displayInfoId", displayInfoId), Double.class);
 	}
 

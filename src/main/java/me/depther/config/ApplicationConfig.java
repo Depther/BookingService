@@ -8,5 +8,4 @@ import org.springframework.context.annotation.Import;
 @Import({DatabaseConfig.class})
 @ComponentScan(basePackages = {"me.depther.service", "me.depther.repository"})
 public class ApplicationConfig {
-
 }
