@@ -72,7 +72,7 @@
             <version>2.9.8</version>
         </dependency>
 
-        <!-- 로깅 라이브러리 -->
+        <!-- 로깅 관련 모 -->듈
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

@@ -18,14 +18,14 @@
 			<div class="header fade">
 				<header class="header_tit">
 					<h1 class="logo">
-						<a href="mainpage.html" class="lnk_logo" title="네이버">
+						<a href="/" class="lnk_logo" title="네이버">
 							<span class="spr_bi ico_n_logo">네이버</span>
 						</a>
-						<a href="mainpage.html" class="lnk_logo" title="예약">
+						<a href="/" class="lnk_logo" title="예약">
 							<span class="spr_bi ico_bk_logo">예약</span>
 						</a>
 					</h1>
-					<a href="#" class="btn_my">
+					<a href="/myReservation" class="btn_my">
 						<span title="예약확인">예약확인</span>
 					</a>
 				</header>
@@ -35,72 +35,32 @@
 					<div class="section_visual">
 						<header>
 							<h1 class="logo">
-								<a href="mainpage.html" class="lnk_logo" title="네이버">
+								<a href="/" class="lnk_logo" title="네이버">
 									<span class="spr_bi ico_n_logo">네이버</span>
 								</a>
-								<a href="mainpage.html" class="lnk_logo" title="예약">
+								<a href="/" class="lnk_logo" title="예약">
 									<span class="spr_bi ico_bk_logo">예약</span>
 								</a>
 							</h1>
-							<a href="myreservation.html" class="btn_my">
+							<a href="/myReservation" class="btn_my">
 								<span class="viewReservation" title="예약확인">예약확인</span>
 							</a>
 						</header>
 						<div class="pagination">
 							<div class="bg_pagination"></div>
 							<div class="figure_pagination">
+								<!-- 배경 사진의 현재 index -->
 								<span class="num">1</span>
-								<span class="num off">/ <span>2</span></span>
+								<span class="num off">/
+									<span><!-- 배경 사진의 개수 --></span>
+								</span>
 							</div>
 						</div>
 						<div class="group_visual">
 							<div>
 								<div class="container_visual" style="width: 414px;">
-									<ul class="visual_img detail_swipe">
-										<li class="item" style="width: 414px;">
-											<img alt="" class="img_thumb" src="">
-											<span class="img_bg"></span>
-											<div class="visual_txt">
-												<div class="visual_txt_inn">
-													<h2 class="visual_txt_tit">
-														<span></span></h2>
-													<p class="visual_txt_dsc"></p>
-												</div>
-											</div>
-										</li>
-										<li class="item" style="width: 414px;">
-											<img alt="" class="img_thumb" src="">
-											<span class="img_bg"></span>
-											<div class="visual_txt">
-												<div class="visual_txt_inn">
-													<h2 class="visual_txt_tit">
-														<span></span></h2>
-													<p class="visual_txt_dsc"></p>
-												</div>
-											</div>
-										</li>
-										<li class="item" style="width: 414px;">
-											<img alt="" class="img_thumb" src="">
-											<span class="img_bg"></span>
-											<div class="visual_txt">
-												<div class="visual_txt_inn">
-													<h2 class="visual_txt_tit">
-														<span></span></h2>
-													<p class="visual_txt_dsc"></p>
-												</div>
-											</div>
-										</li>
-										<li class="item" style="width: 414px;">
-											<img alt="" class="img_thumb" src="">
-											<span class="img_bg"></span>
-											<div class="visual_txt">
-												<div class="visual_txt_inn">
-													<h2 class="visual_txt_tit">
-														<span></span></h2>
-													<p class="visual_txt_dsc"></p>
-												</div>
-											</div>
-										</li>
+									<ul class="visual_img detail_swipe slide">
+										<!-- 배경 사진 -->
 									</ul>
 								</div>
 								<div class="prev">
@@ -342,7 +302,25 @@
 		</footer>
 		<div id="photoviwer"></div>
 
+		<!-- productImage Template -->
+		<script id="template-productImage-item" type="text/template">
+			<li class="item slide-item" style="width: 414px; height: 414px;">
+				<img alt="productImage" class="img_thumb" src="{{saveFileName}}">
+				<span class="img_bg"></span>
+				<div class="visual_txt">
+					<div class="visual_txt_inn">
+						<h2 class="visual_txt_tit">
+							<span>{{productDescription}}</span>
+						</h2>
+						<p class="visual_txt_dsc"></p>
+					</div>
+				</div>
+			</li>
+		</script>
+
 		<!-- JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js" integrity="sha256-ngJY93C4H39YbmrWhnLzSyiepRuQDVKDNCWO2iyMzFw=" crossorigin="anonymous"></script>
+		<script src="../../static/js/lib.js"></script>
 		<script src="../../static/js/detail.js"></script>
 	</body>
 </html>

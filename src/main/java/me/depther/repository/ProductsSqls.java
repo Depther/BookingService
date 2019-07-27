@@ -76,20 +76,23 @@ class ProductsSqls {
 
 	static final String SELECT_PRODUCT_IMAGES =
 			"SELECT B.id as productId," +
-			"       A.id as productImageId," +
-			"       A.type," +
-			"       C.id as fileInfoId," +
-			"       C.file_name as fileName," +
-			"       C.save_file_name as saveFileName," +
-			"       C.content_type as ContentType," +
-			"       C.delete_flag as deleteFlag," +
-			"       C.create_date as createDate," +
-			"       C.modify_date as modifyDate" +
-			"  FROM product_image as A" +
+			"       C.id as productImageId," +
+			"       C.type," +
+			"       D.id as fileInfoId," +
+			"       D.file_name as fileName," +
+			"       D.save_file_name as saveFileName," +
+			"       D.content_type as ContentType," +
+			"       D.delete_flag as deleteFlag," +
+			"       D.create_date as createDate," +
+			"       D.modify_date as modifyDate" +
+			"  FROM display_info as A" +
 			" INNER JOIN product as B ON A.product_id = B.id" +
-			" INNER JOIN file_info as C ON A.file_id = C.id" +
-			" INNER JOIN display_info D ON B.id = D.product_id" +
-			" WHERE D.id = :displayInfoId;";
+			" INNER JOIN product_image as C ON B.id = C.product_id" +
+			" INNER JOIN file_info as D ON C.file_id = D.id" +
+			" WHERE A.id = :displayInfoId" +
+			"   AND C.type IN ('ma', 'et')" +
+			" ORDER BY C.type DESC" +
+			" LIMIT 2";
 
 	static final String SELECT_DISPLAY_INFO_IMAGE =
 			"SELECT A.id as displayInfoImageId," +
