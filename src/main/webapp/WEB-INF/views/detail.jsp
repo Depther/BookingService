@@ -65,7 +65,7 @@
 								</div>
 								<div class="prev">
 									<div class="prev_inn">
-										<a href="#" class="btn_prev" title="이전">
+										<a href="#" class="btn_prev slide_prev" title="이전">
 											<!-- [D] 첫 이미지 이면 off 클래스 추가 -->
 											<i class="spr_book2 ico_arr6_lt off"></i>
 										</a>
@@ -73,7 +73,7 @@
 								</div>
 								<div class="nxt">
 									<div class="nxt_inn">
-										<a href="#" class="btn_nxt" title="다음">
+										<a href="#" class="btn_nxt slide_next" title="다음">
 											<i class="spr_book2 ico_arr6_rt"></i>
 										</a>
 									</div>
