@@ -11,6 +11,7 @@ function getPromotions() {
 			let resultHTML = html.replace("{productImageUrl}", item.productImageUrl);
 			target.insertAdjacentHTML("beforeend", resultHTML);
 		});
+		setSlideEffect();
 	});
 	xhr.open("GET", "http://localhost:8080/api/promotions");
 	xhr.send();
@@ -77,7 +78,7 @@ function clickCategoryMenu(e) {
 	let clickedMenu = e.target.parentElement;
 
 	if (e.target.tagName === "SPAN" && activedMenu !== clickedMenu) {
-		let categoryId = clickedMenu.parentElement.getAttribute("data-category");
+		let categoryId = clickedMenu.parentElement.dataset.category;
 		activedMenu.classList.remove("active");
 		clickedMenu.classList.add("active");
 		document.querySelector(".more > .btn").style.visibility = "visible";
@@ -110,25 +111,9 @@ function clearProducts() {
 		rightColumn.removeChild(rightColumn.firstChild);
 }
 
-// Main
-document.addEventListener("DOMContentLoaded", function() {
-	// 초기 데이터 수신
-	getPromotions();
-	getCategories();
-	getProducts();
-
-	// 카테고리 메뉴 이벤트 설정
-	let categoryMenu = document.querySelector(".event_tab_lst");
-	categoryMenu.addEventListener("click", clickCategoryMenu);
-
-	// 더보기 버튼 이벤트 설정
-	let moreBtn = document.querySelector(".more > .btn");
-	moreBtn.addEventListener("click", clickMoreBtn);
-});
-
-// 프로모션 영역 슬라이드 기능
-window.addEventListener('load', function() {
-	cloneItem();
+// 프로모션 영역 슬라이드 효과 설정 함수
+function setSlideEffect() {
+	addDummyItems();
 
 	let promotionItems = document.querySelectorAll(".visual_img > .item");
 	let len = promotionItems.length;
@@ -146,10 +131,11 @@ window.addEventListener('load', function() {
 			count++;
 		}
 	}, 4000);
-});
+};
 
-// 슬라이드를 부드럽게 처리하기 위해 복제요소를 추가하는 함수
-function cloneItem() {
+
+// 슬라이드를 부드럽게 처리하기 위해 양 끝에 더미 아이템 추가
+function addDummyItems() {
 	let firstItem = document.querySelector(".visual_img > .item:first-child");
 	firstItem.parentElement.appendChild(firstItem.cloneNode(true));
 }
@@ -157,9 +143,25 @@ function cloneItem() {
 // 프로모션 슬라이드 마지막 이미지 자연스럽게 처리하는 함수
 function controlEndImg(promotionItems, len) {
 	setTimeout(function() {
-		for (let i = 0; i < len; i++) {
-			promotionItems.item(i).style.transition = "0s";
-			promotionItems.item(i).style.transform = "translateX(0%)";
-		}
+		promotionItems.forEach(function(item) {
+			item.style.transition = "0s";
+			item.style.transform = "translateX(0%)";
+		});
 	}, 1000);
 }
+
+// Main
+document.addEventListener("DOMContentLoaded", function() {
+	// 초기 데이터 수신
+	getPromotions();
+	getCategories();
+	getProducts();
+
+	// 카테고리 메뉴 이벤트 설정
+	let categoryMenu = document.querySelector(".event_tab_lst");
+	categoryMenu.addEventListener("click", clickCategoryMenu);
+
+	// 더보기 버튼 이벤트 설정
+	let moreBtn = document.querySelector(".more > .btn");
+	moreBtn.addEventListener("click", clickMoreBtn);
+});
