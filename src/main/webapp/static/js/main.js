@@ -88,7 +88,7 @@ function clickCategoryMenu(e) {
 }
 
 // 더보기 버튼 클릭 이벤트 핸들러
-function clickMoreBtn(e) {
+function clickMoreBtn() {
 	let categoryId = document.querySelector(".event_tab_lst > .item > .active")
 		                     .parentElement.getAttribute("data-category");
 
@@ -131,7 +131,7 @@ function setSlideEffect() {
 			count++;
 		}
 	}, 4000);
-};
+}
 
 
 // 슬라이드를 부드럽게 처리하기 위해 양 끝에 더미 아이템 추가
@@ -141,7 +141,7 @@ function addDummyItems() {
 }
 
 // 프로모션 슬라이드 마지막 이미지 자연스럽게 처리하는 함수
-function controlEndImg(promotionItems, len) {
+function controlEndImg(promotionItems) {
 	setTimeout(function() {
 		promotionItems.forEach(function(item) {
 			item.style.transition = "0s";
