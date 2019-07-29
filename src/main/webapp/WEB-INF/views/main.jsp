@@ -24,7 +24,7 @@
 							<span class="spr_bi ico_bk_logo">예약</span>
 						</a>
 					</h1>
-					<a href="bookinglogin.html" class="btn_my">
+					<a href="/bookinglogin" class="btn_my">
 						<span class="viewReservation" title="예약확인">예약확인</span>
 					</a>
 				</header>
@@ -135,7 +135,7 @@
 		<!-- Product Template -->
 		<script id="template-product-item" type="text/template">
 			<li class="item">
-				<a href="/detail?id={productId}" class="item_book">
+				<a href="/detail?id={displayInfoId}" class="item_book">
 					<div class="item_preview">
 						<img alt="{productDescription}" class="img_thumb"
 							 src="http://localhost:8080/{productImageUrl}">

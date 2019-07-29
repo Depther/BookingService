@@ -54,6 +54,7 @@ function getProducts(categoryId, start) {
 
 		response.items.forEach(function(item, index) {
 			let resultHTML = html.replace("{productId}", item.productId)
+				                 .replace("{displayInfoId}", item.displayInfoId)
 				                 .replace(/{productDescription}/gi, item.productDescription)
 				                 .replace("{productImageUrl}", item.productImageUrl)
 				                 .replace("{placeName}", item.placeName)
