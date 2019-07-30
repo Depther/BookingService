@@ -90,7 +90,7 @@ function clickCategoryMenu(e) {
 // 더보기 버튼 클릭 이벤트 핸들러
 function clickMoreBtn() {
 	let categoryId = document.querySelector(".event_tab_lst > .item > .active")
-		                     .parentElement.getAttribute("data-category");
+		                     .parentElement.dataset.category;
 
 	let eventBoxes = document.querySelectorAll(".lst_event_box");
 	let start = eventBoxes.item(0).childElementCount + eventBoxes.item(1).childElementCount;

@@ -76,7 +76,7 @@ function clickCategoryMenu(e) {
 	let clickedMenu = e.target.parentElement;
 
 	if (e.target.tagName === "SPAN" && activedMenu !== clickedMenu) {
-		let categoryId = clickedMenu.parentElement.getAttribute("data-category");
+		let categoryId = clickedMenu.parentElement.dataset.category;
 		activedMenu.classList.remove("active");
 		clickedMenu.classList.add("active");
 		document.querySelector(".more > .btn").style.visibility = "visible";
@@ -88,7 +88,7 @@ function clickCategoryMenu(e) {
 // 더보기 버튼 클릭 이벤트 핸들러
 function clickMoreBtn(e) {
 	let categoryId = document.querySelector(".event_tab_lst > .item > .active")
-		                     .parentElement.getAttribute("data-category");
+		                     .parentElement.dataset.category;
 
 	let eventBoxes = document.querySelectorAll(".lst_event_box");
 	let start = eventBoxes.item(0).childElementCount + eventBoxes.item(1).childElementCount;
