@@ -8,17 +8,17 @@ function APIRequest(requestType, requestUrl, params, handler) {
 
 // 서버에 요청을 전송하고 응답을 받아오는 메소드
 APIRequest.prototype.sendRequest = function() {
-	let xhr = new XMLHttpRequest();
-	xhr.addEventListener("load", this.handler);
-	xhr.open(this.requestType, this.requestUrl);
-	xhr.send(this.params);
+	let request = new XMLHttpRequest();
+	request.addEventListener("load", this.handler);
+	request.open(this.requestType, this.requestUrl);
+	request.send(this.params);
 };
 
 /*
 	슬라이드 애니메이션 처리 객체
 	사용 방법
-	1. Slide 아이템의 상위 태그에 slide 클래스 설정(필수)
-	2. Slide 아이템에는 slide-item 클래스 설정(필수)
+	1. Slide 아이템의 상위 태그에 slide 클래스 설정
+	2. Slide 아이템에는 slide-item 클래스 설정
 	3. 슬라이드 버튼에 slide_prev 또는 slide_next 클래스 설정
  */
 function Slide() {
@@ -37,7 +37,7 @@ function Slide() {
 }
 
 // 슬라이드 애니메이션을 설정하는 메소드
-Slide.prototype.handleAllProcess = function() {
+Slide.prototype.executeProcess = function() {
 	this.setPageDisplay();
 	if (this.length > 1) {
 		this.addDummyItems();
