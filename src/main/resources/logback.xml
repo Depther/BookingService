@@ -18,7 +18,7 @@
         </encoder>
     </appender>
 
-    <logger name="me.depther" level="debug"/>
+    <logger name="me.depther" level="error"/>
 
     <root level="error">
         <appender-ref ref="CONSOLE"/>

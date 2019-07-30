@@ -39,13 +39,13 @@ function Slide() {
 // 슬라이드 애니메이션을 설정하는 메소드
 Slide.prototype.executeProcess = function() {
 	this.setPageDisplay();
-	if (this.length > 1) {
-		this.addDummyItems();
-		this.setSlideBtn();
-	} else {
+	if (this.length <= 1) {
 		this.prevBtn.style.visibility = "hidden";
 		this.nextBtn.style.visibility = "hidden";
+		return;
 	}
+	this.addDummyItems();
+	this.setSlideBtn();
 };
 
 // 전체 이미지 수 및 현재 이미지 인덱스 표시 처리 메소드
@@ -60,7 +60,6 @@ Slide.prototype.addDummyItems = function() {
 	this.slide.insertBefore(this.lastItem.cloneNode(true), this.slide.childNodes[0]);
 	this.slideItems = document.querySelectorAll(".slide > .slide-item");
 	this.length = this.slideItems.length;
-	// this.itemCount = this.length - 2;
 	this.slideItems.forEach(function(item) {
 		item.style.transform = "translateX(" + this.xPos + "%)";
 	}.bind(this));
