@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.*;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"me.depther.controller"})
+@ComponentScan(basePackages = {"me.depther.controller", "me.depther.exception"})
 public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override

@@ -5,8 +5,6 @@ import me.depther.model.DisplayInfoResponse;
 import me.depther.model.ProductResponse;
 import me.depther.repository.ProductsRepository;
 import me.depther.service.ProductsService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +14,18 @@ public class ProductsServiceImpl implements ProductsService {
 	@Autowired
 	private ProductsRepository productsRepository;
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	private int wholeCategory = 0;
 
 	@Override
 	public ProductResponse getProducts(int categoryId, int start) throws Exception {
 		ProductResponse response = new ProductResponse();
-		if (categoryId != 0) {
-			response.setTotalCount(productsRepository.selectPartCount(categoryId));
-			response.setItems(productsRepository.selectPartList(categoryId, start));
-		} else {
+		if (categoryId == wholeCategory) {
 			response.setTotalCount(productsRepository.selectAllCount());
 			response.setItems(productsRepository.selectAllList(start));
+		}
+		if (categoryId != wholeCategory) {
+			response.setTotalCount(productsRepository.selectPartCount(categoryId));
+			response.setItems(productsRepository.selectPartList(categoryId, start));
 		}
 		return response;
 	}
