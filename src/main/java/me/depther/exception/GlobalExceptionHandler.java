@@ -24,12 +24,14 @@ public class GlobalExceptionHandler extends RuntimeException {
 	@ExceptionHandler(RuntimeException.class)
 	public ExceptionResponse runtimeExceptionHandler(Exception e) throws Exception {
 		logger.error(e.toString());
+		e.printStackTrace();
 		return new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, env.getProperty("message.error.runtime-exception"));
 	}
 
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	public ExceptionResponse noContentExceptionHandler(HttpServletResponse response, Exception e) throws Exception {
 		logger.error(e.toString());
+		e.printStackTrace();
 		return new ExceptionResponse(HttpStatus.NO_CONTENT, env.getProperty("message.error.no-content"));
 	}
 

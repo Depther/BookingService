@@ -473,7 +473,8 @@ hr {
 }
 
 .spr_book2.ico_minus3.disabled {
-    background-position: 0 -305px
+    background-position: 0 -305px;
+    pointer-events: none;
 }
 
 .spr_book2.ico_plus3 {
@@ -1246,12 +1247,12 @@ button {
 }
 
 /* added by crong. */
-.form_horizontal .inline_form .inline_control.tel_wrap {
+.form_horizontal .inline_form .inline_control {
     position: relative;
 }
     
 
-.form_horizontal .inline_form .inline_control.tel_wrap .warning_msg {
+.form_horizontal .inline_form .inline_control .warning_msg {
     position: relative;
     position: absolute;
     top: 0;
@@ -1263,6 +1264,7 @@ button {
     width: 98%;
     color: red;
     padding-left: 10px;
+    font-size: 13px;
 }
 
 

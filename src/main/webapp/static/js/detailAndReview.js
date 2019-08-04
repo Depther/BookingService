@@ -1,21 +1,27 @@
+/*
+	Q. review 페이지에서 동작해야할 JavaScript가 detail 페이지 JavaScript의 부분집합이라서
+	페이지별로 파일을 따로 나누지 않고 중간에 조건 분기를 통해서 처리하도록 하고 파일명은 detailAndReview.js
+	라고 명명했습니다.
+	이와 같이 로직이 중복되는 경우 어떻게 처리를 하는게 좋은가요?
+	사실 파일 두 개 생길것을 하나로 합친다고 해서 크게 이점이 생기는 부분은 없는 것 같아서요.
+	오히려 중간에 조건 분기 때문에 가독성만 떨어지는게 아닌가 싶기도 하네요.
+ */
+
 // 요청 전송 객체
 let requestObj = {
 	requestMethod:"GET",
 	requestURI:"/api/products/",
 	displayInfoId: 0,
-	params: window.location.search.substr(1).split("&"),
 	// 전체 프로세스 진행 메소드
 	executeProcess: function() {
-		this.getQueryString();
+		this.getAPIParam();
 		this.callSendRequest();
 	},
-	// 쿼리스트링에서 파라미터 가져오는 메소드
-	getQueryString: function() {
-		this.params.forEach(function(value) {
-			let param = value.split("=");
-			if (param[0] === "id")
-				this.displayInfoId = param[1];
-		}.bind(this));
+	// URI에서 요청 파라미터 가져오는 메소드
+	getAPIParam: function() {
+		const regExp = /[a-zA-Z]+\/([0-9]+)/;
+		const targetIdx = 1;
+		this.displayInfoId = regExp.exec(window.location.pathname)[targetIdx];
 	},
 	// 요청을 전송하는 메소드를 호출하는 메소드
 	callSendRequest: function() {
@@ -24,8 +30,13 @@ let requestObj = {
 	},
 	// 응답을 처리할 콜백
 	responseHandler: function() {
+		const pageName = window.location.pathname;
 		responseObj.getResponse(JSON.parse(this.responseText));
-		responseObj.executeProcess();
+		if (pageName.includes("detail")) responseObj.executeProcess();
+		if (pageName.includes("review")) {
+			responseObj.setCommentsInfo(true);
+			responseObj.setCommentsList(true);
+		}
 	}
 };
 
@@ -45,8 +56,8 @@ let responseObj = {
 		this.setMainImages();
 		this.setProductContent();
 		this.setReserveBtn();
-		this.setCommentsInfo();
-		this.setCommentsList();
+		this.setCommentsInfo(false);
+		this.setCommentsList(false);
 		this.setInformationBtn();
 		this.setDetailInfo();
 	},
@@ -95,25 +106,30 @@ let responseObj = {
 	// 예약하기 버튼 설정 메소드
 	setReserveBtn: function() {
 		let reserveBtn = document.querySelector(".bk_btn");
+		let displayInfoId = this.displayInfo.displayInfoId;
 		reserveBtn.addEventListener("click", function() {
-			window.location = "/reserve";
+			window.location = "/reserve/" + displayInfoId;
 		});
 	},
 	// Comment 관련 정보를 출력하는 메소드
-	setCommentsInfo: function() {
+	setCommentsInfo: function(reviewPageYn) {
 		const perfectScore = 5;
 		let commentsCnt = document.querySelector(".green");
 		let starImage = document.querySelector(".graph_value");
 		let avgScore =  document.querySelector(".grade_area > .text_value > span");
-		let moreCommentsBtn = document.querySelector(".btn_review_more");
 		commentsCnt.textContent = this.comments.length + "건";
 		starImage.style.width = ((this.averageScore / perfectScore) * 100) + "%";
 		avgScore.textContent = this.averageScore.toFixed(1);
-		moreCommentsBtn.href = "/review?id=" + this.displayInfo.displayInfoId;
+		if (!reviewPageYn) {
+			let moreCommentsBtn = document.querySelector(".btn_review_more");
+			moreCommentsBtn.href = "/review/" + this.displayInfo.displayInfoId;
+		}
 	},
 	// Comments 리스트를 출력하는 메소드
-	setCommentsList: function() {
-		const printCount = this.comments.length > 3 ? 3 : this.comments.length;
+	setCommentsList: function(reviewPageYn) {
+		let printCount = this.comments.length > 3 ? 3 : this.comments.length;
+		if (reviewPageYn)
+			printCount = this.comments.length;
 		let commentTemplate= document.querySelector("#template-comment").textContent;
 		let commentBindMethod = Handlebars.compile(commentTemplate);
 		let commentTarget = document.querySelector(".list_short_review");
