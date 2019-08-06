@@ -28,7 +28,7 @@
 			<div class="ct">
 				<div class="ct_wrap">
 					<div class="top_title">
-						<a href="detail.html" class="btn_back" title="이전 화면으로 이동">
+						<a href="" class="btn_back" title="이전 화면으로 이동">
 							<i class="fn fn-backward1"></i>
 						</a>
 						<h2>
@@ -89,9 +89,9 @@
 											<span>예매자</span>
 										</label>
 										<div class="inline_control">
-											<input type="text" name="name" id="name" class="text" placeholder="이름" maxlength="17">
-											<div class="warning_msg">
-												형식이 틀렸거나 너무 짧아요.
+											<input type="text" name="name" id="name" class="text" placeholder="이름" maxlength="17" autocomplete="off" value="하이루">
+											<div class="warning_msg name">
+												한글만 입력 가능합니다.
 											</div>
 										</div>
 									</div>
@@ -101,8 +101,8 @@
 											<span>연락처</span>
 										</label>
 										<div class="inline_control tel_wrap">
-											<input type="tel" name="tel" id="tel" class="tel" value="" placeholder="휴대폰 입력 시 예매내역 문자발송">
-											<div class="warning_msg">
+											<input type="tel" name="tel" id="tel" class="tel" value="010-4461-2217" placeholder="휴대폰 입력 시 예매내역 문자발송" autocomplete="off">
+											<div class="warning_msg tel">
 												형식이 틀렸거나 너무 짧아요.
 											</div>
 										</div>
@@ -113,8 +113,8 @@
 											<span>이메일</span>
 										</label>
 										<div class="inline_control">
-											<input type="email" name="email" id="email" class="email" value="" placeholder="sample@naver.com" maxlength="50">
-											<div class="warning_msg">
+											<input type="email" name="email" id="email" class="email" value="test@gmail.com" placeholder="sample@naver.com" maxlength="50" autocomplete="off">
+											<div class="warning_msg email">
 												형식이 틀렸거나 너무 짧아요.
 											</div>
 										</div>
@@ -122,8 +122,8 @@
 									<div class="inline_form last">
 										<label class="label" for="message">예매내용</label>
 										<div class="inline_control">
-											<p class="inline_txt selected">
-												2017.2.17, 총 <span id="totalCount">0</span>매 총 <span id="totalPrice">0</span>원
+											<p class="inline_txt selected" id="message">
+												<span id="showDate"><!-- 공연 날짜 --></span>, 총 <span id="totalCount">0</span>매 총 <span id="totalPrice">0</span>원
 											</p>
 										</div>
 									</div>
@@ -226,7 +226,7 @@
 					<!-- [D] 수량이 최소 값이 일때 ico_minus3, count_control_input에 disabled 각각 추가, 수량이 최대 값일 때는 ico_plus3에 disabled 추가 -->
 					<div class="clearfix">
 						<a href="#" class="btn_plus_minus spr_book2 ico_minus3 disabled" title="빼기"> </a>
-						<input type="tel" class="count_control_input disabled" value="0" readonly title="수량">
+						<input type="tel" class="count_control_input disabled" value="0" readonly title="수량" productPriceId="{{productPriceId}}">
 						<a href="#" class="btn_plus_minus spr_book2 ico_plus3" title="더하기"></a>
 					</div>
 					<!-- [D] 금액이 0 이상이면 individual_price에 on_color 추가 -->

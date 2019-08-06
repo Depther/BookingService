@@ -1,5 +1,6 @@
 package me.depther.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.depther.model.ReservationInfoResponse;
 import me.depther.model.ReservationParam;
 import me.depther.model.ReservationResponse;
@@ -7,14 +8,17 @@ import me.depther.service.ReservationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-//@RestController("/api/reservations")
+@RestController
+@RequestMapping("/api/reservations")
 public class ReservationsController {
 
 	@Autowired
 	private ReservationsService reservationsService;
 
 	@PostMapping
-	public ReservationResponse postReservationHandler(ReservationParam reservationParam) throws Exception {
+	public ReservationResponse postReservationHandler(@RequestBody String jsonReq) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		ReservationParam reservationParam = mapper.readValue(jsonReq, ReservationParam.class);
 		return reservationsService.setReservation(reservationParam);
 	}
 

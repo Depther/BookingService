@@ -1267,6 +1267,10 @@ button {
     font-size: 13px;
 }
 
+.form_horizontal .inline_form .inline_control .warning_msg.active {
+    visibility: visible;
+}
+
 
 .container_visual {
     -webkit-backface-visibility: hidden;

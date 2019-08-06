@@ -13,7 +13,7 @@ function getPromotions() {
 		});
 		setSlideEffect();
 	});
-	xhr.open("GET", "http://localhost:8080/api/promotions");
+	xhr.open("GET", "/api/promotions");
 	xhr.send();
 }
 
@@ -32,7 +32,7 @@ function getCategories() {
 			target.insertAdjacentHTML("beforeend", resultHTML);
 		});
 	});
-	xhr.open("GET", "http://localhost:8080/api/categories");
+	xhr.open("GET", "/api/categories");
 	xhr.send();
 }
 
@@ -64,7 +64,7 @@ function getProducts(categoryId, start) {
 		});
 	});
 
-	let requestURL = "http://localhost:8080/api/products?";
+	let requestURL = "/api/products?";
 	if (categoryId !== undefined) requestURL += "categoryId=" + categoryId + "&";
 	if (start !== undefined) requestURL += "start=" + start + "&";
 

@@ -6,6 +6,7 @@ import me.depther.model.ReservationResponse;
 import me.depther.repository.ReservationsRepository;
 import me.depther.service.ReservationsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReservationsServiceImpl implements ReservationsService {
@@ -13,6 +14,7 @@ public class ReservationsServiceImpl implements ReservationsService {
 	private ReservationsRepository reservationsRepository;
 
 	@Override
+	@Transactional
 	public ReservationResponse setReservation(ReservationParam reservationParam) throws Exception {
 		return reservationsRepository.setReservation(reservationParam);
 	}
