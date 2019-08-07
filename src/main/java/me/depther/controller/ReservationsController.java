@@ -15,11 +15,12 @@ public class ReservationsController {
 	@Autowired
 	private ReservationsService reservationsService;
 
+	private ObjectMapper mapper = new ObjectMapper();
+
 	@PostMapping
 	public ReservationResponse postReservationHandler(@RequestBody String jsonReq) throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
 		ReservationParam reservationParam = mapper.readValue(jsonReq, ReservationParam.class);
-		return reservationsService.setReservation(reservationParam);
+		return reservationsService.insertReservation(reservationParam);
 	}
 
 	@GetMapping

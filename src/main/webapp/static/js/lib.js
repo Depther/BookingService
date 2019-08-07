@@ -8,7 +8,6 @@ function APIRequest(requestType, requestUrl, params, handler) {
 
 // 서버에 요청을 전송하고 응답을 받아오는 메소드
 APIRequest.prototype.sendRequest = function() {
-	console.table(this.params);
 	let request = new XMLHttpRequest();
 	request.addEventListener("load", this.handler);
 	request.open(this.requestType, this.requestUrl);

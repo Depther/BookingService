@@ -154,7 +154,7 @@ let responseObj = {
 						ticketCount.classList.remove("disabled");
 						minusBtn.classList.remove("disabled");
 					}
-					ticketCount.value = Number.parseInt(ticketCount.value) + 1;
+					ticketCount.setAttribute("value", Number.parseInt(ticketCount.value) + 1);
 					totalCount.textContent = Number.parseInt(totalCount.textContent) + 1;
 					totalPrice.textContent = Number.parseInt(totalPrice.textContent) + Number.parseInt(pricePerTicket);
 				} else {
@@ -162,7 +162,7 @@ let responseObj = {
 						ticketCount.classList.add("disabled");
 						minusBtn.classList.add("disabled");
 					}
-					ticketCount.value = Number.parseInt(ticketCount.value) - 1;
+					ticketCount.setAttribute("value", Number.parseInt(ticketCount.value) - 1);
 					totalCount.textContent = Number.parseInt(totalCount.textContent) - 1;
 					totalPrice.textContent = Number.parseInt(totalPrice.textContent) - Number.parseInt(pricePerTicket);
 				}
@@ -213,26 +213,33 @@ let responseObj = {
 	},
 	// 예약하기 버튼 활성화 조건 체크 및 상태 변환 처리 메소드
 	setConditionChecker: function() {
-		let items = document.querySelectorAll("#name, #tel, #email, #chk3");
+		let items = document.querySelectorAll("#name, #tel, #email, #chk3, .count_control");
 		let name = document.querySelector("#name");
 		let tel = document.querySelector("#tel");
 		let email = document.querySelector("#email");
+		let count = document.querySelector("#totalCount");
 		let chk = document.querySelector("#chk3");
 		let reserveBtn = document.querySelector(".bk_btn_wrap");
 		for (let item of items) {
-			let type = item.type === "checkbox" ? "change" : "focusout";
+			let type = "focusout";
+			if (item.type === "checkbox") type = "change";
+			if (item.tagName === "DIV") type = "click";
 			item.addEventListener(type, () => {
-				if (name.value === "" || name.nextElementSibling.classList.contains("active") ||
-				tel.value === "" || tel.nextElementSibling.classList.contains("active") ||
-				email.value === "" || email.nextElementSibling.classList.contains("active") ||
-				!chk.checked) {
-					reserveBtn.classList.add("disable");
-					return;
-				}
-				reserveBtn.classList.remove("disable");
+				setTimeout(() => {
+					if (name.value === "" || name.nextElementSibling.classList.contains("active") ||
+						tel.value === "" || tel.nextElementSibling.classList.contains("active") ||
+						email.value === "" || email.nextElementSibling.classList.contains("active") ||
+						Number.parseInt(count.textContent) === 0 ||
+						!chk.checked) {
+						reserveBtn.classList.add("disable");
+						return;
+					}
+					reserveBtn.classList.remove("disable");
+				}, 0);
 			});
 		}
 	},
+	// 예약하기 버튼 이벤트리스너 설정 메소드
 	setBookingEventListener: function() {
 		let bookingBtn = document.querySelector(".bk_btn");
 		bookingBtn.addEventListener("click", () => {
@@ -288,7 +295,14 @@ class Booking {
 
 	// 수신한 응답을 처리하는 콜백 메소드
 	responseHandler() {
-		console.log(JSON.parse(this.responseText));
+		// P. 예매 성공, 실패 관련 처리를 조금 더 가다듬어야 한다.
+		let response = JSON.parse(this.responseText);
+		if (!response.reservationInfoId) {
+			alert("예매에 실패하였습니다. 다시 시도해주세요.");
+			return;
+		}
+		alert("예매가 완료되었습니다.");
+		window.location.href = "/";
 	}
 }
 

@@ -6,7 +6,7 @@ import me.depther.model.ReservationResponse;
 
 public interface ReservationsService {
 
-	ReservationResponse setReservation(ReservationParam reservationParam) throws Exception;
+	ReservationResponse insertReservation(ReservationParam reservationParam) throws Exception;
 
 	ReservationInfoResponse getReservationInfo(String reservationEmail) throws Exception;
 
