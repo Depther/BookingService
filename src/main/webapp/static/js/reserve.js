@@ -173,7 +173,8 @@ let responseObj = {
 	// 사용자 입력값 검증 이벤트 설정 메소드
 	setInputChecker: function() {
 		const NAME_REGEXP = /[a-zA-Z0-9]|[ \[\]{}()<>?|`~!@#$%^&*\-_+=,.;:\"'\\]/g;
-		const TEL_REGEXP = /^\d{2,3}-\d{3,4}-\d{4}$/;
+		const TEL_REGEXP = /^\d{3}-\d{3,4}-\d{4}$/;
+		const NO_DASH_TEL_REGEXP = /^\d{3}\d{3,4}\d{4}$/;
 		const EMAIL_REGEXP = /^[a-zA-Z0-9\.]{1,30}@[a-zA-Z]+\.(([a-zA-Z]+\.[a-zA-Z]+)|([a-zA-Z]+))$/;
 		let name = document.querySelector("#name");
 		let tel = document.querySelector("#tel");
@@ -185,6 +186,13 @@ let responseObj = {
 			}
 		});
 		tel.addEventListener("focusout", () => {
+			if (NO_DASH_TEL_REGEXP.test(tel.value)) {
+				if (tel.value.length == 10) {
+					tel.value = tel.value.substr(0, 3) + "-" + tel.value.substr(3, 3) + "-" + tel.value.substr(6, 4);
+				} else if (tel.value.length == 11) {
+					tel.value = tel.value.substr(0, 3) + "-" + tel.value.substr(3, 4) + "-" + tel.value.substr(7, 4);
+				}
+			}
 			if (!TEL_REGEXP.test(tel.value)) {
 				tel.nextElementSibling.classList.add("active");
 			}

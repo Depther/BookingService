@@ -22,6 +22,8 @@ APIRequest.prototype.sendRequest = function() {
 	3. 슬라이드 버튼에 slide_prev 또는 slide_next 클래스 설정
  */
 function Slide() {
+	this.imgMotionTime = 500;
+	this.imgMovingSpace = 100;
 	this.slide = document.querySelector(".slide");
 	this.slideItems = document.querySelectorAll(".slide > .slide-item");
 	this.firstItem = document.querySelector(".slide > .slide-item:first-child");
@@ -72,7 +74,7 @@ Slide.prototype.setSlideBtn = function() {
 		this.setSlideBtnInterval();
 		this.xPos += 100;
 		this.slideItems.forEach(function(item) {
-			item.style.transition = "1s";
+			item.style.transition = this.imgMotionTime + "ms";
 			item.style.transform = "translateX(" + this.xPos + "%)";
 		}.bind(this));
 
@@ -86,7 +88,7 @@ Slide.prototype.setSlideBtn = function() {
 		this.setSlideBtnInterval();
 		this.xPos -= 100;
 		this.slideItems.forEach(function(item) {
-			item.style.transition = "1s";
+			item.style.transition = this.imgMotionTime + "ms";
 			item.style.transform = "translateX(" + this.xPos + "%)";
 		}.bind(this));
 
@@ -104,7 +106,7 @@ Slide.prototype.setSlideBtnInterval = function() {
 	setTimeout(function() {
 		this.prevBtn.style.pointerEvents = "auto";
 		this.nextBtn.style.pointerEvents = "auto";
-	}.bind(this), 1000);
+	}.bind(this), this.imgMotionTime);
 };
 
 // 슬라이드 끝에 도달 시 필요한 작업을 처리하는 메소드
@@ -117,5 +119,5 @@ Slide.prototype.controlEndOfSlide = function() {
 			item.style.transition = "0s";
 			item.style.transform = "translateX(" + this.xPos + "%)";
 		}.bind(this));
-	}.bind(this), 1000);
+	}.bind(this), this.imgMotionTime);
 };

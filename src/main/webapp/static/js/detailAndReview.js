@@ -1,5 +1,5 @@
 /*
-	Q. review 페이지에서 동작해야할 JavaScript가 detail 페이지 JavaScript의 부분집합이라서
+	Q. review 페이지와 detail 페이지의 JavaScript가 중복되는 부분이 많아서
 	페이지별로 파일을 따로 나누지 않고 중간에 조건 분기를 통해서 처리하도록 하고 파일명은 detailAndReview.js
 	라고 명명했습니다.
 	이와 같이 로직이 중복되는 경우 어떻게 처리를 하는게 좋은가요?
@@ -32,11 +32,8 @@ let requestObj = {
 	responseHandler: function() {
 		const pageName = window.location.pathname;
 		responseObj.getResponse(JSON.parse(this.responseText));
-		if (pageName.includes("detail")) responseObj.executeProcess();
-		if (pageName.includes("review")) {
-			responseObj.setCommentsInfo(true);
-			responseObj.setCommentsList(true);
-		}
+		if (pageName.includes("detail")) responseObj.executeDetailProcess();
+		if (pageName.includes("review")) responseObj.executeReviewProcess();
 	}
 };
 
@@ -51,8 +48,8 @@ let responseObj = {
 		this.averageScore = response.averageScore;
 		this.productPrices = response.productPrices;
 	},
-	// 전체 프로세스 진행 메소드
-	executeProcess: function() {
+	// Detail 페이지 전체 프로세스 진행 메소드
+	executeDetailProcess: function() {
 		this.setMainImages();
 		this.setProductContent();
 		this.setReserveBtn();
@@ -60,6 +57,12 @@ let responseObj = {
 		this.setCommentsList(false);
 		this.setInformationBtn();
 		this.setDetailInfo();
+	},
+	executeReviewProcess: function() {
+		this.setTitle();
+		this.setCommentsInfo(true);
+		this.setCommentsList(true);
+		this.setBackBtn();
 	},
 	// 상품 메인 이미지에 대한 처리를 하는 메소드
 	setMainImages: function() {
@@ -196,7 +199,16 @@ let responseObj = {
 		addrOld.textContent = this.displayInfo.placeLot;
 		place.textContent = this.displayInfo.placeName;
 		tel.textContent = this.displayInfo.telephone;
-	}
+	},
+	setTitle: function() {
+		let title = document.querySelector(".title");
+		title.textContent = this.displayInfo.productDescription;
+	},
+	// Review 페이지 뒤로 가기 버튼 설정 메소드
+	setBackBtn: function() {
+		let backBtn = document.querySelector(".btn_back");
+		backBtn.href = "/detail/" + this.displayInfo.displayInfoId;
+	},
 };
 
 // 메인 함수
