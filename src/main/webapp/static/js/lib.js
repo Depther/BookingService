@@ -72,7 +72,7 @@ Slide.prototype.addDummyItems = function() {
 Slide.prototype.setSlideBtn = function() {
 	this.prevBtn.addEventListener("click", function() {
 		this.setSlideBtnInterval();
-		this.xPos += 100;
+		this.xPos += this.imgMovingSpace;
 		this.slideItems.forEach(function(item) {
 			item.style.transition = this.imgMotionTime + "ms";
 			item.style.transform = "translateX(" + this.xPos + "%)";
@@ -86,7 +86,7 @@ Slide.prototype.setSlideBtn = function() {
 
 	this.nextBtn.addEventListener("click", function() {
 		this.setSlideBtnInterval();
-		this.xPos -= 100;
+		this.xPos -= this.imgMovingSpace;
 		this.slideItems.forEach(function(item) {
 			item.style.transition = this.imgMotionTime + "ms";
 			item.style.transform = "translateX(" + this.xPos + "%)";
@@ -111,7 +111,7 @@ Slide.prototype.setSlideBtnInterval = function() {
 
 // 슬라이드 끝에 도달 시 필요한 작업을 처리하는 메소드
 Slide.prototype.controlEndOfSlide = function() {
-	this.xPos = this.index === 0 ? this.itemCount * -100 : -100;
+	this.xPos = this.index === 0 ? this.itemCount * parseInt("-" + this.imgMovingSpace) : parseInt("-" + this.imgMovingSpace);
 	this.index = this.index === 0 ? this.itemCount : 1;
 
 	setTimeout(function() {

@@ -24,8 +24,10 @@ public class ReservationsController {
 	}
 
 	@GetMapping
-	public ReservationInfoResponse getReservationInfoHandler(String reservationEmail) throws Exception {
-		return reservationsService.getReservationInfo(reservationEmail);
+	public ReservationInfoResponse getReservationInfoHandler(String jsonReq) throws Exception {
+		System.out.println(jsonReq);
+//		return reservationsService.getReservationInfo(reservationEmail);
+		return null;
 	}
 
 	@PutMapping("/{reservationInfoId}")

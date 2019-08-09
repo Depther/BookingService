@@ -48,15 +48,15 @@
 						</h1>
 						<!---->
 						<div >
-							<form name="confirm_form" class="ng-pristine ng-valid" id="form1" action="provided/reservation.v1.5/reservation.v1.5/resevation-html-base/htmls/myreservation.html">
+							<form name="confirm_form" class="ng-pristine ng-valid" id="form1" action="/myReservation" method="get">
 								<h2 class="login_header_sub border_bottom">
 									<span translate="CM-NON_MEMBER_BK_CONFIRMATION">비회원 예약확인</span>
 								</h2>
 								<div class="login_form">
 									<label class="label_form" for="resrv_id" translate="CM-BOOKING_NUMBER">예약자 이메일 입력</label>
-									<input type="text" class="login_input ng-pristine ng-untouched ng-valid ng-empty" id="resrv_id" name="resrv_email" aria-invalid="false" placeholder="crong@naver.com" title="예매자이메일">
+									<input type="text" class="login_input ng-pristine ng-untouched ng-valid ng-empty" id="resrv_id" name="resrv_email" aria-invalid="false" placeholder="sample@naver.com" title="예매자이메일">
 								</div>
-								<button type="submit" form="form1" class="login_btn confirm" >
+								<button type="submit" form="form1" class="login_btn confirm disable" >
 									<span translate="CM-MY_BOOKING_CHECK">내 예약 확인</span>
 								</button> <!----> <!----> <!----> <!---->
 							</form>
@@ -69,7 +69,7 @@
 				<!---->
 				<go-to-top >
 					<div class="gototop"  aria-hidden="false">
-						<a href="https://m.booking.naver.com/#" class="lnk_top" >
+						<a href="javascript:scroll(0, 0)" class="lnk_top" >
 							<span class="lnk_top_text" translate="CM-TOP">TOP</span>
 						</a>
 					</div>
@@ -79,7 +79,7 @@
 					<ul class="lst_nav">
 						<!---->
 						<li class="lnk_item" >
-							<a href="" class="anchor _logout_link">
+							<a class="anchor _logout_link">
 								<span translate="CM-LOGIN">로그인</span>
 							</a>
 						</li>
@@ -89,7 +89,7 @@
 						</li>
 						<!---->
 						<li class="lnk_item">
-							<a href="http://m.naver.com/services.html" class="anchor">
+							<a class="anchor">
 								<span translate="CM-WHOLE_SERVICE">전체서비스</span>
 							</a>
 						</li>
@@ -97,7 +97,7 @@
 					<p class="dsc_footer" translate="CM-FOOTER_DESC">네이버(주)는 통신판매의 당사자가 아니며, 상품의정보, 거래조건, 이용 및 환불 등과 관련한 의무와 책임은 각 회원에게 있습니다.</p>
 					<dl class="box_vcard">
 						<dt class="tit_dt">
-							<a href="https://m.booking.naver.com/#" class="lnk_naver"   title="펼쳐보기">
+							<a class="lnk_naver" title="펼쳐보기">
 								<span translate="CM-NAVER_INC">(주)네이버 사업자정보</span>
 								<i class="fn fn-down2" aria-hidden="true" ></i>
 							</a>
@@ -106,17 +106,17 @@
 					</dl>
 					<ul class="lst_link">
 						<li class="item">
-							<a class="anchor" ui-sref="policy" href="https://m.booking.naver.com/policy">
+							<a class="anchor" ui-sref="policy">
 								<span translate="CM-TERMS">이용약관</span>
 							</a>
 						</li>
 						<li class="item">
-							<a class="anchor" href="https://nid.naver.com/mobile/user/help/termAgree.nhn?m=viewTermAgree3">
+							<a class="anchor">
 								<strong class="policy_em" translate="CM-PRIVACY_POLICY">개인정보처리방침</strong>
 							</a>
 						</li>
 						<li class="item">
-							<a href="https://m.booking.naver.com/#" class="anchor" >
+							<a class="anchor" >
 								<span translate="CM-CUSTOMER_CENTER_NBOOKING">네이버 예약 고객센터</span>
 							</a>
 						</li>
@@ -156,5 +156,6 @@
 				</div>
 			</translater-modal>
 		</app>
+		<script src="/static/js/bookinglogin.js"></script>
 	</body>
 </html>
