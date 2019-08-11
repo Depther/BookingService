@@ -1,12 +1,14 @@
 package me.depther.model;
 
+import java.util.List;
+
 public class ReservationInfo {
 
 	private boolean cancelYn;
 
 	private String createDate;
 
-	private DisplayInfo displayInfo;
+	private List<DisplayInfo> displayInfos;
 
 	private int displayInfoId;
 
@@ -42,12 +44,12 @@ public class ReservationInfo {
 		this.createDate = createDate;
 	}
 
-	public DisplayInfo getDisplayInfo() {
-		return displayInfo;
+	public List<DisplayInfo> getDisplayInfos() {
+		return displayInfos;
 	}
 
-	public void setDisplayInfo(DisplayInfo displayInfo) {
-		this.displayInfo = displayInfo;
+	public void setDisplayInfos(List<DisplayInfo> displayInfos) {
+		this.displayInfos = displayInfos;
 	}
 
 	public int getDisplayInfoId() {
@@ -127,7 +129,7 @@ public class ReservationInfo {
 		return "ReservationInfo{" +
 				"cancelYn=" + cancelYn +
 				", createDate='" + createDate + '\'' +
-				", displayInfo=" + displayInfo +
+				", displayInfos=" + displayInfos +
 				", displayInfoId=" + displayInfoId +
 				", modifyDate='" + modifyDate + '\'' +
 				", productId=" + productId +
@@ -139,4 +141,5 @@ public class ReservationInfo {
 				", totalPrice=" + totalPrice +
 				'}';
 	}
+
 }

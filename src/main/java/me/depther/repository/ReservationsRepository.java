@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,9 +24,13 @@ public class ReservationsRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate jdbcTemplate;
 
-	private RowMapper<ReservationResponse> reservationInfoRowMapper = BeanPropertyRowMapper.newInstance(ReservationResponse.class);
+	private RowMapper<ReservationResponse> reservationResponseRowMapper = BeanPropertyRowMapper.newInstance(ReservationResponse.class);
 
 	private RowMapper<ReservationPrice> reservationInfoPriceRowMapper = BeanPropertyRowMapper.newInstance(ReservationPrice.class);
+
+	private RowMapper<ReservationInfo> reservationInfoRowMapper = BeanPropertyRowMapper.newInstance(ReservationInfo.class);
+
+	private RowMapper<DisplayInfo> displayInfoRowMapper = BeanPropertyRowMapper.newInstance(DisplayInfo.class);
 
 	public Long insertReservationInfo(ReservationParam reservationParam) throws Exception {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -46,21 +51,26 @@ public class ReservationsRepository {
 		}
 	}
 
-	public ReservationResponse selectReservationResult(Long reservationInfoId) {
+	public ReservationResponse selectReservationResult(Long reservationInfoId) throws Exception {
+		System.out.println("repository");
 		Map<String, Long> map = new HashMap();
 		map.put("reservationInfoId", reservationInfoId);
-		ReservationResponse reservationResponse = jdbcTemplate.queryForObject(SELECT_RESERVATION_INFO, map, reservationInfoRowMapper);
+		ReservationResponse reservationResponse = jdbcTemplate.queryForObject(SELECT_RESERVATION_RESULT, map, reservationResponseRowMapper);
 		List<ReservationPrice> reservationPrices = jdbcTemplate.query(SELECT_RESERVATION_INFO_PRICE, map, reservationInfoPriceRowMapper);
 		reservationResponse.setPrices(reservationPrices);
 		return reservationResponse;
 	}
 
-	public ReservationInfoResponse getReservationInfo(String reservationEmail) throws Exception {
-		return null;
+	public List<ReservationInfo> selectReservationInfos(String reservationEmail) throws Exception {
+		return jdbcTemplate.query(SELECT_RESERVATION_INFOS, Collections.singletonMap("reservationEmail", reservationEmail), reservationInfoRowMapper);
 	}
 
-	public ReservationResponse cancleReservation(int reservationInfoId) throws Exception {
-		return null;
+	public List<DisplayInfo> selectDisplayInfos(int displayInfoId) throws Exception {
+		return jdbcTemplate.query(SELECT_DISPLAY_INFOS, Collections.singletonMap("displayInfoId", displayInfoId) , displayInfoRowMapper);
+	}
+
+	public void cancelReservation(long reservationInfoId) throws Exception {
+		jdbcTemplate.update(CANCEL_RESERVATION, Collections.singletonMap("reservationInfoId", reservationInfoId));
 	}
 
 }

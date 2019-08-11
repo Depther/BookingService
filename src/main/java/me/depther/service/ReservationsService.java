@@ -8,8 +8,8 @@ public interface ReservationsService {
 
 	ReservationResponse insertReservation(ReservationParam reservationParam) throws Exception;
 
-	ReservationInfoResponse getReservationInfo(String reservationEmail) throws Exception;
+	ReservationInfoResponse selectReservationInfo(String reservationEmail) throws Exception;
 
-	ReservationResponse cancleReservation(int reservationInfoId) throws Exception;
+	ReservationResponse cancelReservation(long reservationInfoId) throws Exception;
 
 }

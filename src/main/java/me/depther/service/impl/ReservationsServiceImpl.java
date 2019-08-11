@@ -1,5 +1,6 @@
 package me.depther.service.impl;
 
+import me.depther.model.ReservationInfo;
 import me.depther.model.ReservationInfoResponse;
 import me.depther.model.ReservationParam;
 import me.depther.model.ReservationResponse;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ReservationsServiceImpl implements ReservationsService {
 
@@ -16,7 +19,6 @@ public class ReservationsServiceImpl implements ReservationsService {
 	private ReservationsRepository reservationsRepository;
 
 	@Override
-	@Transactional
 	public ReservationResponse insertReservation(ReservationParam reservationParam) throws Exception {
 		Long reservationInfoId =  reservationsRepository.insertReservationInfo(reservationParam);
 		reservationsRepository.insertReservationInfoPrice(reservationParam, reservationInfoId);
@@ -28,13 +30,22 @@ public class ReservationsServiceImpl implements ReservationsService {
 	}
 
 	@Override
-	public ReservationInfoResponse getReservationInfo(String reservationEmail) throws Exception {
-		return reservationsRepository.getReservationInfo(reservationEmail);
+	@Transactional
+	public ReservationInfoResponse selectReservationInfo(String reservationEmail) throws Exception {
+		List<ReservationInfo> reservationInfos = reservationsRepository.selectReservationInfos(reservationEmail);
+		for (ReservationInfo item : reservationInfos) {
+			item.setDisplayInfos(reservationsRepository.selectDisplayInfos(item.getDisplayInfoId()));
+		}
+		return new ReservationInfoResponse(reservationInfos, reservationInfos.size());
 	}
 
 	@Override
-	public ReservationResponse cancleReservation(int reservationInfoId) throws Exception {
-		return reservationsRepository.cancleReservation(reservationInfoId);
+	public ReservationResponse cancelReservation(long reservationInfoId) throws Exception {
+		/*
+			P. cancel_flag 값 확인
+		 */
+		reservationsRepository.cancelReservation(reservationInfoId);
+		return reservationsRepository.selectReservationResult(reservationInfoId);
 	}
 
 }

@@ -1,36 +1,25 @@
-let eventObj = {
+let eventSettingObj = {
+	// bookinglogin 페이지 이벤트 설정 메소드
 	setEventListener: function() {
 		const EMAIL_REGEXP = /^[a-zA-Z0-9\.]{1,30}@[a-zA-Z]+\.(([a-zA-Z]+\.[a-zA-Z]+)|([a-zA-Z]+))$/;
 		const email = document.querySelector(".login_input");
 		const checkBtn = document.querySelector(".login_btn");
-		email.addEventListener("focusout", (e) => {
+		const form = document.getElementById("form1");
+		email.addEventListener("keyup", (e) => {
 			if (EMAIL_REGEXP.test(e.target.value)) {
 				checkBtn.classList.remove("disable");
 			} else {
 				checkBtn.classList.add("disable");
 			}
 		});
-		checkBtn.addEventListener("click", () => {
-			requestObj.callSendRequest(this.email.value);
+		checkBtn.addEventListener("click", (e) => {
+			e.preventDefault();
+			window.location = "/myReservation?reservationEmail=" + encodeURIComponent(email.value);
 		});
 	}
 };
 
-let requestObj = {
-	requestMethod:"GET",
-	requestURI:"/api/reservations?reservationEmail=",
-	callSendRequest: function(emailText) {
-		let apiRequest = new APIRequest(this.requestMethod, this.requestURI + emailText, null,  this.responseHandler);
-	},
-	responseHandler: function() {
-		console.log(JSON.parse(this.responseText));
-	}
-
-
-
-};
-
 // 메인 함수
 document.addEventListener("DOMContentLoaded", () => {
-	eventObj.setEventListener();
+	eventSettingObj.setEventListener();
 });

@@ -4,16 +4,24 @@ import java.util.List;
 
 public class ReservationInfoResponse {
 
-	private List<ReservationInfo> items;
+	private List<ReservationInfo> reservationInfos;
 
 	private int size;
 
-	public List<ReservationInfo> getItems() {
-		return items;
+	public ReservationInfoResponse() {
 	}
 
-	public void setItems(List<ReservationInfo> items) {
-		this.items = items;
+	public ReservationInfoResponse(List<ReservationInfo> reservationInfos, int size) {
+		this.reservationInfos = reservationInfos;
+		this.size = size;
+	}
+
+	public List<ReservationInfo> getReservationInfos() {
+		return reservationInfos;
+	}
+
+	public void setReservationInfos(List<ReservationInfo> reservationInfos) {
+		this.reservationInfos = reservationInfos;
 	}
 
 	public int getSize() {
@@ -27,8 +35,9 @@ public class ReservationInfoResponse {
 	@Override
 	public String toString() {
 		return "ReservationInfoResponse{" +
-				"items=" + items +
+				"reservationInfos=" + reservationInfos +
 				", size=" + size +
 				'}';
 	}
+
 }

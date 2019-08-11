@@ -24,16 +24,13 @@ public class ReservationsController {
 	}
 
 	@GetMapping
-	public ReservationInfoResponse getReservationInfoHandler(String jsonReq) throws Exception {
-		System.out.println(jsonReq);
-//		return reservationsService.getReservationInfo(reservationEmail);
-		return null;
+	public ReservationInfoResponse getReservationInfoHandler(@RequestParam(name="reservationEmail") String reservationEmail) throws Exception {
+		return reservationsService.selectReservationInfo(reservationEmail);
 	}
 
 	@PutMapping("/{reservationInfoId}")
-	public ReservationResponse putReservationHandler(
-			@PathVariable(name="reservationInfoId") int reservationInfoId) throws Exception {
-		return reservationsService.cancleReservation(reservationInfoId);
+	public ReservationResponse putReservationHandler(@PathVariable(name="reservationInfoId") long reservationInfoId) throws Exception {
+		return reservationsService.cancelReservation(reservationInfoId);
 	}
 
 }
