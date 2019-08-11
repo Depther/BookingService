@@ -1,3 +1,19 @@
+class RequestSender {
+	constructor(methodType, requestURI, params, handler) {
+		this.methodType = methodType;
+		this.requestURI = requestURI;
+		this.params = params;
+		this.handler = handler;
+	}
+
+	sendRequest() {
+		const sender = new XMLHttpRequest();
+		sender.addEventListener("load", this.handler);
+		sender.open(this.methodType, this.requestURI);
+		sender.send(JSON.stringify(this.params));
+	}
+}
+
 // API 요청 처리 객체
 function APIRequest(requestType, requestUrl, params, handler) {
 	this.requestType = requestType;

@@ -216,6 +216,9 @@ let responseObj = {
 			item.addEventListener("click", (e) => {
 				e.preventDefault();
 				item.closest(".agreement").classList.toggle("open");
+				item.lastElementChild.classList.toggle("fn-down2");
+				item.lastElementChild.classList.toggle("fn-up2");
+				item.firstElementChild.textContent = item.firstElementChild.textContent === "보기" ? "접기" : "보기";
 			});
 		}
 	},

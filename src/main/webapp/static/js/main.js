@@ -1,20 +1,26 @@
-// Promotion Data 조회
-function getPromotions() {
-	let xhr = new XMLHttpRequest();
+// 프로모션 이미지 처리 클래스
+class Promotions {
+	// 프로모션 데이터 요청 메소드
+	sendRquest() {
+		const methodType = "GET";
+		const requestURI = "/api/promotions";
+		const params = null;
+		const requestSender = new RequestSender(methodType, requestURI, params, this.responseHandler);
+		requestSender.sendRequest();
+	}
 
-	xhr.addEventListener("load", function() {
-		let response = JSON.parse(this.responseText);
-		let html = document.querySelector("#template-promotion-item").textContent;
-		let target = document.querySelector(".visual_img");
+	// 서버 응답 처리 메소드
+	responseHandler() {
+		const response = JSON.parse(this.responseText);
+		const template = document.querySelector("#template-promotion-item").textContent;
+		const insertPosition = document.querySelector(".visual_img");
 
-		response.items.forEach(function(item) {
-			let resultHTML = html.replace("{productImageUrl}", item.productImageUrl);
-			target.insertAdjacentHTML("beforeend", resultHTML);
-		});
+		for (let item of response.items) {
+			const resultHTML = template.replace("{productImageUrl}", item.productImageUrl);
+			insertPosition.insertAdjacentHTML("beforeend", resultHTML);
+		}
 		setSlideEffect();
-	});
-	xhr.open("GET", "/api/promotions");
-	xhr.send();
+	}
 }
 
 // Category Data 조회
@@ -150,10 +156,12 @@ function controlEndImg(promotionItems) {
 	}, 1000);
 }
 
-// Main
-document.addEventListener("DOMContentLoaded", function() {
+// Main 함수
+document.addEventListener("DOMContentLoaded", () => {
 	// 초기 데이터 수신
-	getPromotions();
+	const promotions = new Promotions();
+	promotions.sendRquest();
+
 	getCategories();
 	getProducts();
 

@@ -8,6 +8,8 @@ import me.depther.service.ReservationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationsController {
@@ -24,8 +26,11 @@ public class ReservationsController {
 	}
 
 	@GetMapping
-	public ReservationInfoResponse getReservationInfoHandler(@RequestParam(name="reservationEmail") String reservationEmail) throws Exception {
-		return reservationsService.selectReservationInfo(reservationEmail);
+	public ReservationInfoResponse getReservationInfoHandler(@RequestParam(name="reservationEmail") String reservationEmail, HttpSession session) throws Exception {
+		ReservationInfoResponse reservationInfoResponse = reservationsService.selectReservationInfo(reservationEmail);
+		if (reservationInfoResponse.getSize() > 0)
+			session.setAttribute("email", reservationEmail);
+		return reservationInfoResponse;
 	}
 
 	@PutMapping("/{reservationInfoId}")

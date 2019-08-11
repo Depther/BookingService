@@ -13,7 +13,7 @@ public class DateController {
 
 	@GetMapping
 	public LocalDate getDateHandler() {
-		return LocalDate.now().plus((long)(Math.random() * 5 + 1), ChronoUnit.DAYS);
+		return LocalDate.now().plus((long)(Math.random() * 5), ChronoUnit.DAYS);
 	}
 
 }

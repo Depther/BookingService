@@ -48,6 +48,9 @@ let viewObj = {
 		this.usedTemplate = document.getElementById("used-reservation-template").textContent;
 		this.canceledTemplate = document.getElementById("canceled-reservation-template").textContent;
 	},
+	/*
+		P. Cancel API 전송하도록 처리해야함
+	 */
 	setCancelBtnEvent: function() {
 		this.confirmedList.addEventListener("click", (e) => {
 			if (e.target.tagName === "BUTTON" ||
