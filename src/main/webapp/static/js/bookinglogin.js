@@ -1,25 +1,26 @@
-let eventSettingObj = {
-	// bookinglogin 페이지 이벤트 설정 메소드
-	setEventListener: function() {
-		const EMAIL_REGEXP = /^[a-zA-Z0-9\.]{1,30}@[a-zA-Z]+\.(([a-zA-Z]+\.[a-zA-Z]+)|([a-zA-Z]+))$/;
-		const email = document.querySelector(".login_input");
-		const checkBtn = document.querySelector(".login_btn");
-		const form = document.getElementById("form1");
-		email.addEventListener("keyup", (e) => {
-			if (EMAIL_REGEXP.test(e.target.value)) {
-				checkBtn.classList.remove("disable");
-			} else {
-				checkBtn.classList.add("disable");
-			}
-		});
-		checkBtn.addEventListener("click", (e) => {
-			e.preventDefault();
-			window.location = "/myReservation?reservationEmail=" + encodeURIComponent(email.value);
-		});
-	}
+// 이벤트 담당 클래스
+function Event() {
+	this.email = document.querySelector(".login_input");
+	this.checkBtn = document.querySelector(".login_btn");
+	this.EMAIL_REGEXP = /^[a-zA-Z0-9\.]{1,30}@[a-zA-Z]+\.(([a-zA-Z]+\.[a-zA-Z]+)|([a-zA-Z]+))$/;
+}
+
+// 이벤트 설정 메소드
+Event.prototype.setEventListener = function() {
+	this.email.addEventListener("keyup", (e) => {
+		if (this.EMAIL_REGEXP.test(e.target.value)) {
+			this.checkBtn.classList.remove("disable");
+		} else {
+			this.checkBtn.classList.add("disable");
+		}
+	});
+	this.checkBtn.addEventListener("click", (e) => {
+		e.preventDefault();
+		window.location = "/myReservation?reservationEmail=" + encodeURIComponent(this.email.value);
+	});
 };
 
 // 메인 함수
 document.addEventListener("DOMContentLoaded", () => {
-	eventSettingObj.setEventListener();
+	new Event().setEventListener();
 });

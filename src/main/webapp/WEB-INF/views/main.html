@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8">
 		<meta name="description"
@@ -23,8 +23,8 @@
 							<span class="spr_bi ico_bk_logo">예약</span>
 						</a>
 					</h1>
-					<a href="/bookinglogin" class="btn_my">
-						<span class="viewReservation" title="예약확인">예약확인</span>
+					<a href="/bookinglogin" th:href="${email} ? '/myReservation?reservationEmail=' + ${email} : '/bookinglogin'" class="btn_my">
+						<span th:text="${email} ? ${email} : '예약확인'" class="viewReservation" title="예약확인">예약확인</span>
 					</a>
 				</header>
 			</div>
@@ -152,6 +152,7 @@
 		</script>
 
 		<!-- JavaScript -->
-		<script src="../../static/js/main.js"></script>
+		<script src="/static/js/lib.js"></script>
+		<script src="/static/js/main.js"></script>
 	</body>
 </html>

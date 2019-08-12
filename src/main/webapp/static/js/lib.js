@@ -1,16 +1,20 @@
+// RestAPI 요청 전송 클래스
 class RequestSender {
-	constructor(methodType, requestURI, params, handler) {
+	constructor(client, methodType, requestURI, params, listener) {
+		this.client = client;
 		this.methodType = methodType;
 		this.requestURI = requestURI;
 		this.params = params;
-		this.handler = handler;
+		this.listener = listener;
 	}
 
 	sendRequest() {
-		const sender = new XMLHttpRequest();
-		sender.addEventListener("load", this.handler);
-		sender.open(this.methodType, this.requestURI);
-		sender.send(JSON.stringify(this.params));
+		const xhr = new XMLHttpRequest();
+		xhr.addEventListener("load", () => {
+			this.listener(xhr, this.client);
+		});
+		xhr.open(this.methodType, this.requestURI);
+		xhr.send(JSON.stringify(this.params));
 	}
 }
 

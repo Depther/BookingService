@@ -8,7 +8,6 @@ let requestObj = {
 	executeProcess: function() {
 		this.getAPIParam();
 		this.callSendRequest();
-		this.callDateAPI();
 	},
 	// URI에서 요청 파라미터 가져오는 메소드
 	getAPIParam: function() {
@@ -21,23 +20,12 @@ let requestObj = {
 		let apiRequest = new APIRequest(this.requestMethod, this.requestURI + this.displayInfoId, null, this.responseHandler);
 		apiRequest.sendRequest();
 	},
-	// 공연 날짜 API를 요청하는 메소드
-	callDateAPI: function() {
-		let apiRequest = new APIRequest(this.requestMethod, this.dateURI, null, this.dateHandler);
-		apiRequest.sendRequest();
-	},
 	// 상품 정보 응답을 처리할 콜백 함수
 	responseHandler: function() {
 		const pageName = window.location.pathname;
 		responseObj.getResponse(JSON.parse(this.responseText));
 		responseObj.executeProcess();
 	},
-	// 공연 날짜 응답을 처리할 콜백 함수
-	dateHandler: function() {
-		let response = JSON.parse(this.responseText);
-		let showDate = document.querySelector("#showDate");
-		showDate.textContent = `${response.year}.${response.monthValue}.${response.dayOfMonth}`;
-	}
 };
 
 let responseObj = {

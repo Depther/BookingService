@@ -22,7 +22,12 @@ let requestObj = {
 	},
 	// 응답을 처리할 콜백
 	responseHandler: function() {
-		console.log(JSON.parse(this.responseText));
+		const response = JSON.parse(this.responseText);
+		console.log(response);
+		if (response.size === 0) {
+			alert("예매 내역이 존재하지 않습니다.");
+			window.location.href = "/";
+		}
 	}
 };
 

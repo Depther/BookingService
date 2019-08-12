@@ -28,8 +28,9 @@ public class ReservationsController {
 	@GetMapping
 	public ReservationInfoResponse getReservationInfoHandler(@RequestParam(name="reservationEmail") String reservationEmail, HttpSession session) throws Exception {
 		ReservationInfoResponse reservationInfoResponse = reservationsService.selectReservationInfo(reservationEmail);
-		if (reservationInfoResponse.getSize() > 0)
+		if (session.getAttribute("email") == null && reservationInfoResponse.getSize() > 0) {
 			session.setAttribute("email", reservationEmail);
+		}
 		return reservationInfoResponse;
 	}
 
