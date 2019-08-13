@@ -34,16 +34,13 @@ public class ReservationsServiceImpl implements ReservationsService {
 	public ReservationInfoResponse selectReservationInfo(String reservationEmail) throws Exception {
 		List<ReservationInfo> reservationInfos = reservationsRepository.selectReservationInfos(reservationEmail);
 		for (ReservationInfo item : reservationInfos) {
-			item.setDisplayInfos(reservationsRepository.selectDisplayInfos(item.getDisplayInfoId()));
+			item.setDisplayInfo(reservationsRepository.selectDisplayInfos(item.getDisplayInfoId()));
 		}
 		return new ReservationInfoResponse(reservationInfos, reservationInfos.size());
 	}
 
 	@Override
 	public ReservationResponse cancelReservation(long reservationInfoId) throws Exception {
-		/*
-			P. cancel_flag 값 확인
-		 */
 		reservationsRepository.cancelReservation(reservationInfoId);
 		return reservationsRepository.selectReservationResult(reservationInfoId);
 	}

@@ -16,9 +16,7 @@ public class ReservationsSqls {
 
 	public static String SELECT_RESERVATION_RESULT =
 			"SELECT id as reservationInfoId," +
-			"       CASE when cancel_flag = 0 then 'false'" +
-			"            when cancel_flag = 1 then 'true' " +
-			"        END as cancleYn," +
+			"       cancel_flag as cancelYn," +
 			"       create_date as createDate," +
 			"       display_info_id as displayInfoId," +
 			"       modify_date as modifyDate," +
@@ -70,7 +68,7 @@ public class ReservationsSqls {
 			"       A.modify_date as modifyDate," +
 			"       A.opening_hours as openingHours," +
 			"       A.place_lot as placeLot," +
-			"       A.place_lot as placeName," +
+			"       A.place_name as placeName," +
 			"       A.place_street as placeStreet," +
 			"       B.content as productContent," +
 			"       B.description as productDescription," +

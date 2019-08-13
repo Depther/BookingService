@@ -19,6 +19,7 @@ class RequestSender {
 }
 
 // API 요청 처리 객체
+// P. RequestSender로 전부 바꿔줘야함
 function APIRequest(requestType, requestUrl, params, handler) {
 	this.requestType = requestType;
 	this.requestUrl = requestUrl;

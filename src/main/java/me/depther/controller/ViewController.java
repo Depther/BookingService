@@ -45,4 +45,9 @@ public class ViewController {
 	public String myReservationView() {
 		return "myReservation";
 	}
+
+	@GetMapping("/reviewWrite")
+	public String reviewWrite() {
+		return "reviewWrite";
+	}
 }

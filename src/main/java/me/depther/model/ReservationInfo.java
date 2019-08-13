@@ -8,7 +8,7 @@ public class ReservationInfo {
 
 	private String createDate;
 
-	private List<DisplayInfo> displayInfos;
+	private DisplayInfo displayInfo;
 
 	private int displayInfoId;
 
@@ -44,12 +44,12 @@ public class ReservationInfo {
 		this.createDate = createDate;
 	}
 
-	public List<DisplayInfo> getDisplayInfos() {
-		return displayInfos;
+	public DisplayInfo getDisplayInfo() {
+		return displayInfo;
 	}
 
-	public void setDisplayInfos(List<DisplayInfo> displayInfos) {
-		this.displayInfos = displayInfos;
+	public void setDisplayInfo(DisplayInfo displayInfo) {
+		this.displayInfo = displayInfo;
 	}
 
 	public int getDisplayInfoId() {
@@ -129,7 +129,7 @@ public class ReservationInfo {
 		return "ReservationInfo{" +
 				"cancelYn=" + cancelYn +
 				", createDate='" + createDate + '\'' +
-				", displayInfos=" + displayInfos +
+				", displayInfo=" + displayInfo +
 				", displayInfoId=" + displayInfoId +
 				", modifyDate='" + modifyDate + '\'' +
 				", productId=" + productId +
@@ -141,5 +141,4 @@ public class ReservationInfo {
 				", totalPrice=" + totalPrice +
 				'}';
 	}
-
 }

@@ -52,7 +52,6 @@ public class ReservationsRepository {
 	}
 
 	public ReservationResponse selectReservationResult(Long reservationInfoId) throws Exception {
-		System.out.println("repository");
 		Map<String, Long> map = new HashMap();
 		map.put("reservationInfoId", reservationInfoId);
 		ReservationResponse reservationResponse = jdbcTemplate.queryForObject(SELECT_RESERVATION_RESULT, map, reservationResponseRowMapper);
@@ -65,8 +64,8 @@ public class ReservationsRepository {
 		return jdbcTemplate.query(SELECT_RESERVATION_INFOS, Collections.singletonMap("reservationEmail", reservationEmail), reservationInfoRowMapper);
 	}
 
-	public List<DisplayInfo> selectDisplayInfos(int displayInfoId) throws Exception {
-		return jdbcTemplate.query(SELECT_DISPLAY_INFOS, Collections.singletonMap("displayInfoId", displayInfoId) , displayInfoRowMapper);
+	public DisplayInfo selectDisplayInfos(int displayInfoId) throws Exception {
+		return jdbcTemplate.queryForObject(SELECT_DISPLAY_INFOS, Collections.singletonMap("displayInfoId", displayInfoId) , displayInfoRowMapper);
 	}
 
 	public void cancelReservation(long reservationInfoId) throws Exception {
