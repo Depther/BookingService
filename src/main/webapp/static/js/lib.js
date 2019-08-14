@@ -18,23 +18,6 @@ class RequestSender {
 	}
 }
 
-// API 요청 처리 객체
-// P. RequestSender로 전부 바꿔줘야함
-function APIRequest(requestType, requestUrl, params, handler) {
-	this.requestType = requestType;
-	this.requestUrl = requestUrl;
-	this.params = params;
-	this.handler = handler;
-}
-
-// 서버에 요청을 전송하고 응답을 받아오는 메소드
-APIRequest.prototype.sendRequest = function() {
-	let request = new XMLHttpRequest();
-	request.addEventListener("load", this.handler);
-	request.open(this.requestType, this.requestUrl);
-	request.send(JSON.stringify(this.params));
-};
-
 /*
 	슬라이드 애니메이션 처리 객체
 	사용 방법

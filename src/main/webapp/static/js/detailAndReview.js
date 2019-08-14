@@ -25,13 +25,13 @@ let requestObj = {
 	},
 	// 요청을 전송하는 메소드를 호출하는 메소드
 	callSendRequest: function() {
-		let apiRequest = new APIRequest(this.requestMethod, this.requestURI + this.displayInfoId, null, this.responseHandler);
-		apiRequest.sendRequest();
+		const requestSender = new RequestSender(this, this.requestMethod, this.requestURI + this.displayInfoId, null, this.responseHandler);
+		requestSender.sendRequest();
 	},
 	// 응답을 처리할 콜백
-	responseHandler: function() {
+	responseHandler: function(xhr, client) {
 		const pageName = window.location.pathname;
-		responseObj.getResponse(JSON.parse(this.responseText));
+		responseObj.getResponse(JSON.parse(xhr.responseText));
 		if (pageName.includes("detail")) responseObj.executeDetailProcess();
 		if (pageName.includes("review")) responseObj.executeReviewProcess();
 	}
