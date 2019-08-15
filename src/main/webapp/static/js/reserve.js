@@ -193,8 +193,10 @@ Reservation.prototype.setInputValueChecker = function() {
 	const email = document.querySelector("#email");
 	const warning = document.querySelectorAll(".warning_msg");
 	name.addEventListener("focusout", () => {
-		if (name.value.search(NAME_REGEXP) !== -1) {
+		if (name.value.search(NAME_REGEXP) !== -1 || name.value.length <= 0) {
 			name.nextElementSibling.classList.add("active");
+		} else {
+			name.nextElementSibling.classList.remove("active");
 		}
 	});
 	tel.addEventListener("focusout", () => {
@@ -207,11 +209,15 @@ Reservation.prototype.setInputValueChecker = function() {
 		}
 		if (!TEL_REGEXP.test(tel.value)) {
 			tel.nextElementSibling.classList.add("active");
+		} else {
+			tel.nextElementSibling.classList.remove("active");
 		}
 	});
 	email.addEventListener("focusout", () => {
 		if (!EMAIL_REGEXP.test(email.value)) {
 			email.nextElementSibling.classList.add("active");
+		} else {
+			email.nextElementSibling.classList.remove("active");
 		}
 	});
 	for (let elem of warning) {
