@@ -1,5 +1,6 @@
 package me.depther.config;
 
+import me.depther.intercepter.SessionCheckIntercepter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +14,14 @@ import org.thymeleaf.templatemode.TemplateMode;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"me.depther.controller", "me.depther.exception"})
+@ComponentScan(basePackages = {"me.depther.controller", "me.depther.exception", "me.depther.intercepter"})
 public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private ApplicationContext applicationContext;
+
+	@Autowired
+	private SessionCheckIntercepter sessionCheckIntercepter;
 
 	@Bean
 	public SpringResourceTemplateResolver templateResolver(){
@@ -51,5 +55,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		configurer.enable();
 	}
 
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(sessionCheckIntercepter).addPathPatterns("/", "/detail/{displayInfoId}");
+	}
 }
 

@@ -12,15 +12,11 @@ public class ViewController {
 
 	@GetMapping("/")
 	public String mainView(HttpSession session, Model model) {
-		String email = (String)session.getAttribute("email");
-		if (email != null) model.addAttribute("email", email);
 		return "main";
 	}
 
 	@GetMapping("/detail/{displayInfoId}")
 	public String detailView(HttpSession session, Model model) {
-		String email = (String)session.getAttribute("email");
-		if (email != null) model.addAttribute("email", email);
 		return "detail";
 	}
 
