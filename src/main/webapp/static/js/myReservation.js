@@ -27,7 +27,6 @@ DataRequest.prototype.callSendRequest = function() {
 // 서버에서 온 응답을 처리하는 메소드
 DataRequest.prototype.responseHandler = function(xhr) {
 	const response = JSON.parse(xhr.responseText);
-	console.log(response);
 	if (response.size === 0) {
 		alert("예매 내역이 존재하지 않습니다.");
 		window.location.href = "/";
@@ -138,7 +137,6 @@ ConfirmedItem.prototype.setCancelBtnListener = function() {
 // 예약 취소에 대한 응답 처리 메소드
 ConfirmedItem.prototype.responseHandler = function(xhr, client) {
 	const response = JSON.parse(xhr.responseText);
-	console.log(response);
 	const canceledCntElem = document.querySelectorAll(".link_summary_board .figure").item(3);
 	const template = document.querySelector("#canceled-reservation-template").textContent;
 	const bindTemplate = Handlebars.compile(template);
