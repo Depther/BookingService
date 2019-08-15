@@ -275,8 +275,10 @@ Reservation.prototype.setReserveBtnConditionChecker = function() {
 Reservation.prototype.setReserveBtnEventListener = function() {
 	const bookingBtn = document.querySelector(".bk_btn");
 	bookingBtn.addEventListener("click", () => {
-		const bookingRequest = new BookingRequest(this.response);
-		bookingRequest.sendBookingRequest();
+		if (confirm("예약하시겠습니까?")) {
+			const bookingRequest = new BookingRequest(this.response);
+			bookingRequest.sendBookingRequest();
+		}
 	});
 };
 

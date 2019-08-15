@@ -90,8 +90,10 @@ ConfirmedItem.prototype.executeProcess = function() {
 	this.methodType = "PUT";
 	this.requestURI = "/api/reservations/";
 	this.params = null;
+	this.cancelItem = null;
 	this.addItems();
 	this.setCancelBtnListener();
+	this.setConfirmPopupListener();
 };
 
 // 예약 확정 아이템을 화면에 추가하는 메소드
@@ -116,20 +118,34 @@ ConfirmedItem.prototype.addItems = function() {
 // 취소 버튼 이벤트리스너 설정 메소드
 ConfirmedItem.prototype.setCancelBtnListener = function() {
 	const confirmedList = document.querySelector(".card.confirmed");
-	const confirmedCount = document.querySelectorAll(".link_summary_board > .figure").item(1);
+	const cancelPopup = document.querySelector(".popup_booking_wrapper");
 	confirmedList.addEventListener("click", (e) => {
-		if (e.target.tagName === "BUTTON" || (e.target.tagName === "SPAN" && e.target.parentElement.tagName === "BUTTON")) {
-			if (confirm("취소하시겠습니까?")) {
-				const card = e.target.closest(".card_item");
-				this.canceledRsvId = parseInt(card.querySelector(".booking_number").textContent.substring(3));
-				this.canceledDesc = card.querySelector(".tit").textContent;
-				this.canceledPlace = card.querySelector(".item:nth-child(3) .item_dsc").textContent;
-				this.canceledPrice = card.querySelector(".price_amount").firstElementChild.textContent;
-				const requestSender = new RequestSender(this, this.methodType, this.requestURI + this.canceledRsvId, this.params, this.responseHandler);
-				requestSender.sendRequest();
-				confirmedCount.textContent = parseInt(confirmedCount.textContent) - 1;
-				card.remove();
-			}
+		if (e.target.tagName === "BUTTON" || (e.target.tagNa요me === "SPAN" && e.target.parentElement.tagName === "BUTTON")) {
+			this.cancelItem = e.target.closest(".card_item");
+			cancelPopup.querySelector(".pop_tit").firstElementChild.textContent = this.cancelItem.querySelector(".tit").textContent;
+			cancelPopup.style.display = "block";
+		}
+	});
+};
+
+// 취소 팝업 이벤트 리스너 설정 메소드
+ConfirmedItem.prototype.setConfirmPopupListener = function() {
+	const cancelPopup = document.querySelector(".popup_booking_wrapper");
+	const confirmedCount = document.querySelectorAll(".link_summary_board > .figure").item(1);
+	cancelPopup.addEventListener("click", (e) => {
+		if (e.target.closest(".btn_gray") || e.target.closest(".popup_btn_close")) {
+			cancelPopup.style.display = "none";
+		}
+		if (e.target.closest(".btn_green")) {
+			this.canceledRsvId = parseInt(this.cancelItem.querySelector(".booking_number").textContent.substring(3));
+			this.canceledDesc = this.cancelItem.querySelector(".tit").textContent;
+			this.canceledPlace = this.cancelItem.querySelector(".item:nth-child(3) .item_dsc").textContent;
+			this.canceledPrice = this.cancelItem.querySelector(".price_amount").firstElementChild.textContent;
+			const requestSender = new RequestSender(this, this.methodType, this.requestURI + this.canceledRsvId, this.params, this.responseHandler);
+			requestSender.sendRequest();
+			confirmedCount.textContent = parseInt(confirmedCount.textContent) - 1;
+			this.cancelItem.remove();
+			cancelPopup.style.display = "none";
 		}
 	});
 };

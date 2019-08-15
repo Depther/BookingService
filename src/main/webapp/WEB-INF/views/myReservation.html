@@ -19,7 +19,7 @@
 							<span class="spr_bi ico_bk_logo">예약</span>
 						</a>
 					</h1>
-					<a href="#" class="btn_my">
+					<a class="btn_my">
 						<span title="내예약" class="viewReservation"><!-- 예약자 이메일 --></span>
 					</a>
 				</header>
@@ -255,7 +255,9 @@
 		</div>
 		<footer>
 			<div class="gototop">
-				<a href="#" class="lnk_top"> <span class="lnk_top_text">TOP</span> </a>
+				<a href="javascript:scroll(0,0)" class="lnk_top">
+					<span class="lnk_top_text">TOP</span>
+				</a>
 			</div>
 			<div id="footer" class="footer">
 				<p class="dsc_footer">네이버(주)는 통신판매의 당사자가 아니며, 상품의정보, 거래조건, 이용 및 환불 등과 관련한 의무와 책임은 각 회원에게 있습니다.</p>
@@ -268,7 +270,7 @@
 			<div class="dimm_dark" style="display:block"></div>
 			<div class="popup_booking refund">
 				<h1 class="pop_tit">
-					<span>서비스명/상품명</span>
+					<span><!-- 서비스명/상품명 --></span>
 					<small class="sm">2000.0.00.(월)2000.0.00.(일)</small>
 				</h1>
 				<div class="nomember_alert">
@@ -276,18 +278,18 @@
 				</div>
 				<div class="pop_bottom_btnarea">
 					<div class="btn_gray">
-						<a href="#" class="btn_bottom">
+						<a class="btn_bottom">
 							<span>아니오</span>
 						</a>
 					</div>
 					<div class="btn_green">
-						<a href="#" class="btn_bottom">
+						<a class="btn_bottom">
 							<span>예</span>
 						</a>
 					</div>
 				</div>
 				<!-- 닫기 -->
-				<a href="#" class="popup_btn_close" title="close">
+				<a class="popup_btn_close" title="close">
 					<i class="spr_book2 ico_cls"></i>
 				</a>
 				<!--// 닫기 -->
@@ -298,7 +300,7 @@
 		<!-- 예약 확정 내역 템플릿 -->
 		<script id="confirmed-reservation-template" type="text/template">
 			<article class="card_item">
-				<a href="#" class="link_booking_details">
+				<a class="link_booking_details">
 					<div class="card_body">
 						<div class="left"></div>
 						<div class="middle">
@@ -354,14 +356,14 @@
 						<div class="right"></div>
 					</div>
 				</a>
-				<a href="#" class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
+				<a class="fn fn-share1 naver-splugin btn_goto_share" title="공유하기"></a>
 			</article>
 		</script>
 
 		<!-- 이용 완료 내역 템플릿 -->
 		<script id="used-reservation-template" type="text/template">
 			<article class="card_item">
-				<a href="#" class="link_booking_details">
+				<a class="link_booking_details">
 					<div class="card_body">
 						<div class="left"></div>
 						<div class="middle">
@@ -424,7 +426,7 @@
 		<!-- 취소 내역 템플릿 -->
 		<script id="canceled-reservation-template" type="text/template">
 			<article class="card_item">
-				<a href="#" class="link_booking_details">
+				<a class="link_booking_details">
 					<div class="card_body">
 						<div class="left"></div>
 						<div class="middle">
