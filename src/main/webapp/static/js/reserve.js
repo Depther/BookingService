@@ -289,7 +289,7 @@ function BookingRequest(response) {
 	this.reservationEmail = document.querySelector("#email").value;
 	this.reservationName = document.querySelector("#name").value;
 	this.reservationTelephone = document.querySelector("#tel").value;
-	this.reservationYearMonthDay = new Date().toLocaleDateString();
+	this.reservationYearMonthDay = DateFormatter.makeDateString(new Date());
 }
 
 // 예약 정보 서버로 전송

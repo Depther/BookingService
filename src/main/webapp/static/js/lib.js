@@ -18,6 +18,17 @@ class RequestSender {
 	}
 }
 
+class DateFormatter {
+	static makeDateString(date) {
+		const year = date.getFullYear();
+		let month = (date.getMonth() + 1);
+		month = month >= 10 ? month : '0' + month;
+		let day = date.getDate();
+		day = day >= 10 ? day : '0' + day;
+		return year + month + day;
+	}
+}
+
 /*
 	슬라이드 애니메이션 처리 객체
 	사용 방법
