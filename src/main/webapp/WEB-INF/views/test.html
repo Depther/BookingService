@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Title</title>
+	</head>
+	<body>
+		<form method="post"
+			  action="/api/reservations/32/comments?comment=123&productId=321&score=4"
+			  enctype="multipart/form-data">
+			<input type="file" id="reviewImage" name="reviewImage">
+			<input type="submit" id="submitBtn" value="전송">
+		</form>
+		<script>
+			const submitBtn = document.querySelector("#submitBtn");
+			const file = document.querySelector("#reviewImage");
+			submitBtn.addEventListener("click", (e) => {
+				e.preventDefault();
+				console.log("clicked");
+				const formData = new FormData();
+				formData.append("reviewImage", file.files[0]);
+				const xhr = new XMLHttpRequest();
+				xhr.addEventListener("load", () => {
+					console.log(JSON.parse(this.responseText));
+				});
+				xhr.open("POST", "/api/reservations/32/comments?comment=123&productId=321&score=4");
+				xhr.send(formData);
+			})
+		</script>
+	</body>
+</html>

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 	<head>
 		<meta charset="utf-8">
 		<meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 		<title>네이버 예약</title>
-		<link href="../../static/css/style.css" rel="stylesheet">
+		<link href="/static/css/style.css" rel="stylesheet">
 	</head>
-
 	<body>
 		<div id="container">
 			<!-- [D] 예약하기로 들어오면 header에 fade 클래스 추가로 숨김 -->
@@ -31,7 +29,9 @@
 				<div class="wrap_review_list">
 					<div class="review_header">
 						<div class="top_title gr">
-							<a href="/detail" class="btn_back" title="이전 화면으로 이동"> <i class="fn fn-backward1"></i> </a>
+							<a href="/detail" class="btn_back" title="이전 화면으로 이동">
+								<i class="fn fn-backward1"></i>
+							</a>
 							<h2>
 								<a class="title" href="#"><!-- 상품 제목 --></a>
 							</h2>
@@ -52,21 +52,22 @@
 									<em class="total">5.0</em>
 								</strong>
 								<span class="join_count">
-										<em class="green"><!-- 한줄평 건수 출력 --></em> 등록
-									</span>
+									<em class="green"><!-- 한줄평 건수 출력 --></em> 등록
+								</span>
 							</div>
 							<ul class="list_short_review">
 								<!-- 한줄평 리스트 출력 -->
 							</ul>
 						</div>
 						<p class="guide">
-							<i class="spr_book2 ico_bell"></i> <span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span>
+							<i class="spr_book2 ico_bell"></i>
+							<span>네이버 예약을 통해 실제 방문한 이용자가 남긴 평가입니다.</span>
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		<hr> </div>
+		<hr>
 		<footer>
 			<div class="gototop">
 				<a href="javascript:scroll(0,0)" class="lnk_top">
@@ -113,7 +114,7 @@
 
 		<!-- JavaScript -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js" integrity="sha256-ngJY93C4H39YbmrWhnLzSyiepRuQDVKDNCWO2iyMzFw=" crossorigin="anonymous"></script>
-		<script src="../../static/js/lib.js"></script>
-		<script src="../../static/js/detailAndReview.js"></script>
+		<script src="/static/js/lib.js"></script>
+		<script src="/static/js/detailAndReview.js"></script>
 	</body>
 </html>

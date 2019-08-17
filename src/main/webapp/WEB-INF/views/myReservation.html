@@ -224,6 +224,65 @@
 									</div>
 								</div>
 								<!-- 이용 완료 리스트 -->
+<!--								<article class="card_item">-->
+<!--									<a class="link_booking_details">-->
+<!--										<div class="card_body">-->
+<!--											<div class="left"></div>-->
+<!--											<div class="middle">-->
+<!--												<div class="card_detail">-->
+<!--													<em class="booking_number">{{reservationInfoId}}</em>-->
+<!--													<h4 class="tit">Dummy Item</h4>-->
+<!--													<ul class="detail">-->
+<!--														<li class="item">-->
+<!--															<span class="item_tit">일정</span>-->
+<!--															<em class="item_dsc">-->
+<!--																2000.0.00.(월) 2000.0.00.(일)-->
+<!--															</em>-->
+<!--														</li>-->
+<!--														<li class="item">-->
+<!--															<span class="item_tit">내역</span>-->
+<!--															<em class="item_dsc">-->
+<!--																내역이 없습니다.-->
+<!--															</em>-->
+<!--														</li>-->
+<!--														<li class="item">-->
+<!--															<span class="item_tit">장소</span>-->
+<!--															<em class="item_dsc">-->
+<!--																{{placeName}}-->
+<!--															</em>-->
+<!--														</li>-->
+<!--														<li class="item">-->
+<!--															<span class="item_tit">업체</span>-->
+<!--															<em class="item_dsc">-->
+<!--																업체명이 없습니다.-->
+<!--															</em>-->
+<!--														</li>-->
+<!--													</ul>-->
+<!--													<div class="price_summary">-->
+<!--														<span class="price_tit">결제 예정금액</span>-->
+<!--														<em class="price_amount">-->
+<!--															<span>{{totalPrice}}</span>-->
+<!--															<span class="unit">원</span>-->
+<!--														</em>-->
+<!--													</div>-->
+<!--													<div class="booking_cancel">-->
+<!--														<a href="/reviewWrite?">-->
+<!--															<button class="btn">-->
+<!--																<span>예매자 리뷰 남기기</span>-->
+<!--															</button>-->
+<!--														</a>-->
+<!--													</div>-->
+<!--												</div>-->
+<!--											</div>-->
+<!--											<div class="right"></div>-->
+<!--										</div>-->
+<!--										<div class="card_footer">-->
+<!--											<div class="left"></div>-->
+<!--											<div class="middle"></div>-->
+<!--											<div class="right"></div>-->
+<!--										</div>-->
+<!--									</a>-->
+<!--								</article>-->
 							</li>
 							<li class="card used cancel">
 								<div class="link_booking_details">
@@ -404,7 +463,7 @@
 									</em>
 								</div>
 								<div class="booking_cancel">
-									<a href="/reviewWrite">
+									<a href="/reviewWrite?displayInfoId={{displayInfoId}}&reservationInfoId={{reservationInfoIdParam}}&reservationEmail={{reservationEmail}}">
 										<button class="btn">
 											<span>예매자 리뷰 남기기</span>
 										</button>

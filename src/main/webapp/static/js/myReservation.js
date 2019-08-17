@@ -185,12 +185,15 @@ UsedItem.prototype.addItems = function() {
 	const bindTemplate = Handlebars.compile(template);
 	const addLocation = document.querySelector(".card.used");
 	for(let item of this.response.reservationInfos) {
-		if (0) {
+		if (!item.cancelYn) {
 			const data = {
 				reservationInfoId: "No." + String(item.reservationInfoId).padStart(7, '0'),
 				productDescription: item.displayInfo.productDescription,
 				placeName: item.displayInfo.placeName,
-				totalPrice: Number(item.totalPrice).toLocaleString('en')
+				totalPrice: Number(item.totalPrice).toLocaleString('en'),
+				displayInfoId: item.displayInfo.displayInfoId,
+				reservationInfoIdParam: item.reservationInfoId,
+				reservationEmail: item.reservationEmail
 			};
 			const resultHTML = bindTemplate(data);
 			addLocation.insertAdjacentHTML("beforeend", resultHTML);
@@ -224,13 +227,14 @@ CanceledItem.prototype.addItems = function() {
 				reservationInfoId: "No." + String(item.reservationInfoId).padStart(7, '0'),
 				productDescription: item.displayInfo.productDescription,
 				placeName: item.displayInfo.placeName,
-				totalPrice: Number(item.totalPrice).toLocaleString('en')
+				totalPrice: Number(item.totalPrice).toLocaleString('en'),
 			};
 			const resultHTML = bindTemplate(data);
 			addLocation.insertAdjacentHTML("beforeend", resultHTML);
 		}
 	}
 };
+
 
 // 메인 함수
 document.addEventListener("DOMContentLoaded", () => {

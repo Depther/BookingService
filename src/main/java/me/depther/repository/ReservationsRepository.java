@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -72,4 +73,7 @@ public class ReservationsRepository {
 		jdbcTemplate.update(CANCEL_RESERVATION, Collections.singletonMap("reservationInfoId", reservationInfoId));
 	}
 
+	public CommentResponse postComment(long reservationInfoId, MultipartFile file, String comment, int productId, int score) {
+		return new CommentResponse();
+	}
 }

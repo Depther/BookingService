@@ -1,15 +1,14 @@
 package me.depther.service.impl;
 
-import me.depther.model.ReservationInfo;
-import me.depther.model.ReservationInfoResponse;
-import me.depther.model.ReservationParam;
-import me.depther.model.ReservationResponse;
+import me.depther.model.*;
 import me.depther.repository.ReservationsRepository;
 import me.depther.service.ReservationsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @Service
@@ -45,4 +44,8 @@ public class ReservationsServiceImpl implements ReservationsService {
 		return reservationsRepository.selectReservationResult(reservationInfoId);
 	}
 
+	@Override
+	public CommentResponse postComment(long reservationInfoId, MultipartFile file, String comment, int productId, int score) throws Exception {
+		return reservationsRepository.postComment(reservationInfoId, file, comment, productId, score);
+	}
 }
