@@ -6,7 +6,7 @@
 	<meta name="description" content="네이버 예약, 네이버 예약이 연동된 곳 어디서나 바로 예약하고, 네이버 예약 홈(나의예약)에서 모두 관리할 수 있습니다.">
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
 	<title>네이버 예약</title>
-	<link href="../css/style.css" rel="stylesheet">
+	<link href="/static/css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -68,11 +68,11 @@
 				<!-- 리뷰 작성 푸터 -->
 				<div class="review_write_footer_wrap">
 					<div class="review_write_footer">
-						<label class="btn_upload" for="reviewImageFileOpenInput">
+						<label class="btn_upload" for="reviewImage">
 							<i class="fn fn-image1" aria-hidden="true"></i>
 							<span class="text_add_photo">사진 추가</span>
 						</label>
-						<input type="file" class="hidden_input" id="reviewImageFileOpenInput" accept="image/*" multiple>
+						<input type="file" class="hidden_input" id="reviewImage" name="reviewImage" accept="image/*">
 						<div class="guide_review">
 							<span>0</span>/400
 							<span>(최소5자이상)</span>
@@ -87,7 +87,7 @@
 									<a href="#" class="anchor">
 										<span class="spr_book ico_del">삭제</span>
 									</a>
-									<img src="http://naverbooking.phinf.naver.net/20170306_3/1488772023601A4195_JPEG/image.jpg?type=f300_300" width="130" alt="" class="item_thumb">
+									<img src="" width="130" alt="" class="item_thumb">
 									<span class="img_border"></span>
 								</li>
 							</ul>

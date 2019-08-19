@@ -44,7 +44,7 @@ public class ReservationsController {
 
 	@PostMapping("/{reservationInfoId}/comments")
 	public CommentResponse postCommentHandler(@PathVariable("reservationInfoId") long reservationInfoId,
-											  @RequestParam("reviewImage") MultipartFile file,
+											  @RequestParam(value = "reviewImage", required = false) MultipartFile file,
 											  @RequestParam("comment") String comment,
 											  @RequestParam("productId") int productId,
 											  @RequestParam("score") int score) throws Exception {
@@ -53,8 +53,7 @@ public class ReservationsController {
 		System.out.println(comment);
 		System.out.println(productId);
 		System.out.println(score);
-//		return reservationsService.postComment(reservationInfoId, file, comment, productId, score);
-		return null;
+		return new CommentResponse();
 	}
 
 }
