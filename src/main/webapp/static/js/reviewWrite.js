@@ -13,10 +13,12 @@ DataRequest.prototype.executeProcess = function() {
 
 // 쿼리스트링의 파라미터 값을 가져오는 메소드
 DataRequest.prototype.getAPIParam = function() {
-	const regExp = /displayInfoId=([0-9]+)&reservationInfoId=([0-9]+)&reservationEmail=(.+)/;
-	this.displayInfoId = regExp.exec(window.location.search)[1];
-	this.reservationInfoId = regExp.exec(window.location.search)[2];
-	this.reservationEmail = regExp.exec(window.location.search)[3];
+	const displayIdRegExp = /displayInfoId=([0-9]+)/;
+	const reservationIdRegExp = /reservationInfoId=([0-9]+)/;
+	const reservationEmailRegExp = /reservationEmail=([^&]+)/;
+	this.displayInfoId = displayIdRegExp.exec(window.location.search)[1];
+	this.reservationInfoId = reservationIdRegExp.exec(window.location.search)[1];
+	this.reservationEmail = reservationEmailRegExp.exec(window.location.search)[1];
 };
 
 // 데이터 요청을 RequestSender 객체에 위임하는 메소드
@@ -28,7 +30,8 @@ DataRequest.prototype.callSendRequest = function() {
 // 서버로부터 받은 응답을 처리하는 메소드
 DataRequest.prototype.responseHandler = function(xhr, client) {
 	const response = JSON.parse(xhr.responseText);
-	new TopMenu(response, client.reservationEmail).executeProcess()
+	new TopMenu(response, client.reservationEmail).executeProcess();
+	new ReviewRegister(response, client.reservationInfoId, client.reservationEmail).executeProcess();
 };
 
 // 화면 상단바 관련 처리를 담당하는 객체
@@ -66,13 +69,13 @@ Rating.prototype.executeProcess = function() {
 // 별 클릭 이벤트를 설정하는 메소드
 Rating.prototype.setStarBtnListener = function() {
 	const rating = document.querySelector(".rating");
-	const point = document.querySelector(".star_rank");
+	const score = document.querySelector(".star_rank");
 	const stars = document.querySelectorAll(".rating_rdo");
 	rating.addEventListener("click", (e) => {
-		const idx = e.target.getAttribute("value") - 1;
 		if (e.target.tagName == "INPUT") {
-			point.textContent = e.target.getAttribute("value");
-			point.classList.remove("gray_star");
+			score.textContent = e.target.getAttribute("value");
+			score.classList.remove("gray_star");
+			const idx = e.target.getAttribute("value") - 1;
 			for (let i = 0, len = stars.length; i < len; i++) {
 				if (i <= idx) {
 					stars.item(i).checked = true;
@@ -89,11 +92,13 @@ function Review() {}
 
 // 모든 처리를 진행하는 메소드
 Review.prototype.executeProcess = function() {
-	this.setReviewListener();
+	this.setReviewWriteListener();
+	this.setFileSelectListener();
+	this.removeFileListener();
 };
 
 // textarea 관련 이벤트 설정 메소드
-Review.prototype.setReviewListener = function() {
+Review.prototype.setReviewWriteListener = function() {
 	const info = document.querySelector(".review_write_info");
 	const textarea = document.querySelector(".review_textarea");
 	const textCnt = document.querySelector(".guide_review").firstElementChild;
@@ -103,9 +108,8 @@ Review.prototype.setReviewListener = function() {
 		textarea.focus();
 	});
 	textarea.addEventListener("focusout", () => {
-		if (textarea.value == "") {
+		if (textarea.value == "")
 			info.style.display = "block";
-		}
 	});
 	textarea.addEventListener("keyup", () => {
 		const length = textarea.value.length;
@@ -116,42 +120,76 @@ Review.prototype.setReviewListener = function() {
 	})
 };
 
-function ReviewRegister() {
-
-}
-
-ReviewRegister.prototype.executeProcess = function() {
-
+// File 추가 이벤트 시 발생할 이벤트 리스너 등록 메소드
+Review.prototype.setFileSelectListener = function() {
+	const fileElement = document.querySelector("#reviewImageFileOpenInput");
+	const thumbnail = document.querySelector(".item_thumb");
+	const item = thumbnail.closest(".item");
+	fileElement.addEventListener("change", (e) => {
+		let file = fileElement.files[0];
+		if (file.type.includes("jpeg") || file.type.includes("png")) {
+			item.style.display = "block";
+			thumbnail.src = window.URL.createObjectURL(fileElement.files[0]);
+		} else {
+			file = null;
+		}
+	});
 };
 
+// 파일 제거 버튼 클릭 이벤트 시 발생할 이벤트 리스너 등록 메소드
+Review.prototype.removeFileListener = function() {
+	const removeBtn = document.querySelector(".ico_del");
+	const file = document.querySelector("#reviewImageFileOpenInput");
+	const thumbnail = document.querySelector(".item_thumb");
+	const item = thumbnail.closest(".item");
+	removeBtn.addEventListener("click", () => {
+		file.files[0] = null;
+		item.style.display = "none";
+		thumbnail.src=""
+	});
+};
+
+// 리뷰 등록 버튼과 관련된 처리를 담당하는 클래스
+function ReviewRegister(response, reservationInfoId, reservationEmail) {
+	this.response = response;
+	this.reservationInfoId = reservationInfoId;
+	this.reservationEmail = reservationEmail;
+}
+
+// 모든 처리를 진행하는 메소드
+ReviewRegister.prototype.executeProcess = function() {
+	this.setRegistBtnListener();
+};
+
+// 리뷰 등록 버튼 클릭 이벤트 시 발생할 이벤트 리스너 등록 메소드
 ReviewRegister.prototype.setRegistBtnListener = function() {
 	const registBtn = document.querySelector(".bk_btn");
 	registBtn.addEventListener("click", () => {
-		const requestSender = new RequestSender(this, "POST", "");
-		requestSender.sendRequest();
+		const point = document.querySelector(".star_rank").textContent;
+		const comment = document.querySelector(".review_textarea").value;
+		const productId = this.response.displayInfo.productId;
+		const requestURI = "/api/reservations/" + this.reservationInfoId + "/comments?comment=" + comment + "&productId=" + productId + "&score=" + point;
+		const fileElement = document.querySelector("#reviewImageFileOpenInput");
+		const formData = new FormData();
+		formData.append("reviewImage", fileElement.files[0]);
+		if (point !== "0" && comment.length >= 5 && comment.length <= 400) {
+			const requestSender = new RequestSender(this, "post", requestURI, formData, this.responseHandler);
+			requestSender.sendRequest();
+		} else {
+			alert("별점과 리뷰가 적절하지 않습니다.");
+		}
 	});
-
 };
 
+// 리뷰 등록 완료 후 예약 내역 페이지로 이동시키는 메소드
+ReviewRegister.prototype.responseHandler = function(xhr, client) {
+	console.log(JSON.parse(xhr.responseText));
+	window.location.href = "/myReservation?reservationEmail=" + client.reservationEmail;
+};
 
 // 메인 함수
 document.addEventListener("DOMContentLoaded", () => {
 	new DataRequest().executeProcess();
 	new Rating().executeProcess();
 	new Review().executeProcess();
-	// const submitBtn = document.querySelector(".bk_btn");
-	// const file = document.querySelector("#reviewImageFileOpenInput");
-	// submitBtn.addEventListener("click", (e) => {
-	// 	e.preventDefault();
-	// 	console.log("clicked");
-	// 	const formData = new FormData();
-	// 	formData.append("reviewImage", file.files[0]);
-	// 	const xhr = new XMLHttpRequest();
-	// 	xhr.addEventListener("load", () => {
-	// 		console.log(JSON.parse(this.responseText));
-	// 	});
-	// 	xhr.open("POST", "/api/reservations/32/comments?comment=123&productId=321&score=4");
-	// 	xhr.send(formData);
-	// })
-
 });

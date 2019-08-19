@@ -14,7 +14,9 @@ class RequestSender {
 			this.listener(xhr, this.client);
 		});
 		xhr.open(this.methodType, this.requestURI);
-		xhr.send(JSON.stringify(this.params));
+		if (!toString.call(this.params).split(" ")[1].includes("FormData"))
+			this.params = JSON.stringify(this.params);
+		xhr.send(this.params);
 	}
 }
 
