@@ -48,12 +48,7 @@ public class ReservationsController {
 											  @RequestParam("comment") String comment,
 											  @RequestParam("productId") int productId,
 											  @RequestParam("score") int score) throws Exception {
-		System.out.println(file);
-		System.out.println(reservationInfoId);
-		System.out.println(comment);
-		System.out.println(productId);
-		System.out.println(score);
-		return new CommentResponse();
+		return reservationsService.insertComment(productId, reservationInfoId, comment, score, file);
 	}
 
 }

@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -33,26 +32,26 @@ public class ReservationsRepository {
 
 	private RowMapper<DisplayInfo> displayInfoRowMapper = BeanPropertyRowMapper.newInstance(DisplayInfo.class);
 
+	private RowMapper<CommentResponse> commentResponseRowMapper = BeanPropertyRowMapper.newInstance(CommentResponse.class);
+
+	private RowMapper<CommentImage> commentImageRowMapper = BeanPropertyRowMapper.newInstance(CommentImage.class);
+
 	public Long insertReservationInfo(ReservationParam reservationParam) throws Exception {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(INSERT_RESERVATION_INFO, new BeanPropertySqlParameterSource(reservationParam), keyHolder);
 		return (Long)keyHolder.getKey();
 	}
 
-	/*
-		Q. 여기서 마땅히 반환할만한 것이 생각나지 않아서 return 타입을 void로 했는데 괜찮을까요?
-		아니면 무언가를 반환해줘야할까요?
-	 */
 	public void insertReservationInfoPrice(ReservationParam reservationParam, Long reservationInfoId) throws Exception {
 		for (ReservationPrice price : reservationParam.getPrices()) {
 			jdbcTemplate.update(INSERT_RESERVATION_INFO_PRICE, new MapSqlParameterSource()
-							.addValue("reservationInfoId", reservationInfoId)
-			                .addValue("productPriceId", price.getProductPriceId())
-			                .addValue("count", price.getCount()));
+					.addValue("reservationInfoId", reservationInfoId)
+			        .addValue("productPriceId", price.getProductPriceId())
+			        .addValue("count", price.getCount()));
 		}
 	}
 
-	public ReservationResponse selectReservationResult(Long reservationInfoId) throws Exception {
+	public ReservationResponse selectReservationResponse(Long reservationInfoId) throws Exception {
 		Map<String, Long> map = new HashMap();
 		map.put("reservationInfoId", reservationInfoId);
 		ReservationResponse reservationResponse = jdbcTemplate.queryForObject(SELECT_RESERVATION_RESULT, map, reservationResponseRowMapper);
@@ -73,7 +72,38 @@ public class ReservationsRepository {
 		jdbcTemplate.update(CANCEL_RESERVATION, Collections.singletonMap("reservationInfoId", reservationInfoId));
 	}
 
-	public CommentResponse postComment(long reservationInfoId, MultipartFile file, String comment, int productId, int score) {
-		return new CommentResponse();
+	public int insertComment(long productId, long reservationInfoId, String comment, int score) throws Exception {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(INSERT_COMMENT, new MapSqlParameterSource()
+				.addValue("productId", productId)
+				.addValue("reservationInfoId", reservationInfoId)
+				.addValue("score", score)
+				.addValue("comment", comment), keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+
+	public int insertCommentFile(String fileName, String saveFileName, String contentType) throws Exception {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(INSERT_COMMENT_FILE, new MapSqlParameterSource()
+				.addValue("fileName", fileName)
+				.addValue("saveFileName", saveFileName)
+				.addValue("contentType", contentType), keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+
+	public int insertCommentImage(long reservationInfoId, int commentId, int fileId) throws Exception {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(INSERT_COMMENT_IMAGE, new MapSqlParameterSource()
+				.addValue("reservationInfoId", reservationInfoId)
+				.addValue("reservationUserCommentId", commentId)
+				.addValue("fileId", fileId), keyHolder);
+		return keyHolder.getKey().intValue();
+	}
+
+	public CommentResponse selectCommentResponse(int commentId, int imageId) throws Exception {
+		CommentResponse commentResponse = jdbcTemplate.queryForObject(SELECT_COMMENT_RESPONSE, Collections.singletonMap("commentId", commentId), commentResponseRowMapper);
+		CommentImage commentImage = jdbcTemplate.queryForObject(SELECT_COMMENT_IMAGE, Collections.singletonMap("imageId", imageId), commentImageRowMapper);
+		commentResponse.setCommentImage(commentImage);
+		return commentResponse;
 	}
 }

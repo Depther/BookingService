@@ -16,6 +16,6 @@ public interface ReservationsService {
 
 	ReservationResponse cancelReservation(long reservationInfoId) throws Exception;
 
-	CommentResponse postComment(long reservationInfoId, MultipartFile file, String comment, int productId, int score) throws Exception;
+	CommentResponse insertComment(long productId, long reservationInfoId, String comment, int score, MultipartFile file) throws Exception;
 
 }

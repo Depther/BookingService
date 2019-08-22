@@ -1,27 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds">
+    <property name="PROJECT_NAME" value="boostcourse" />
+    <property name="LOG_DIR" value="/home/ckm/log" />
+    <property name="LOG_PATH_NAME" value="${LOG_DIR}/${PROJECT_NAME}/data.log" />
+
+    <!-- 변수 지정 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <Pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</Pattern>
         </encoder>
     </appender>
 
+    <!-- FILE Appender -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/tmp/access.log</file>
+        <file>${LOG_PATH_NAME}</file>
+        <!-- 일자별로 로그파일 적용하기 -->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/tmp/access-%d{yyyy-MM-dd}.log</fileNamePattern>
-            <maxHistory>30</maxHistory>
+            <fileNamePattern>
+                ${LOG_PATH_NAME}.%d{yyyy-MM-dd}
+            </fileNamePattern>
+            <maxHistory>30</maxHistory> <!-- 일자별 백업파일의 보관기간 -->
         </rollingPolicy>
-
         <encoder>
             <Pattern>%d{HH:mm} %-5level %logger{36} - %msg%n</Pattern>
         </encoder>
     </appender>
 
-    <logger name="me.depther" level="error"/>
+    <logger name="me.depther" level="debug">
+        <appender-ref ref="CONSOLE" />
+    </logger>
 
-    <root level="error">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="FILE"/>
+    <root level="warn">
+        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
     </root>
 </configuration>

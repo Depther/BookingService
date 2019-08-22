@@ -2,25 +2,25 @@ package me.depther.model;
 
 public class CommentImage {
 
-	private String contentType;
-
-	private String createDate;
-
-	private boolean deleteFlag;
-
-	private int fileId;
-
-	private String fileName;
-
 	private int imageId;
-
-	private String modifyDate;
 
 	private int reservationInfoId;
 
 	private int reservationUserCommentId;
 
+	private int fileId;
+
+	private String fileName;
+
 	private String saveFileName;
+
+	private String contentType;
+
+	private boolean deleteFlag;
+
+	private String createDate;
+
+	private String modifyDate;
 
 	public CommentImage() {}
 

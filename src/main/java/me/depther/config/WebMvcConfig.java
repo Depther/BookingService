@@ -1,5 +1,6 @@
 package me.depther.config;
 
+import me.depther.intercepter.LogIntercepter;
 import me.depther.intercepter.SessionCheckIntercepter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -24,6 +25,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Autowired
 	private SessionCheckIntercepter sessionCheckIntercepter;
+
+	@Autowired
+	private LogIntercepter logIntercepter;
 
 	@Bean
 	public SpringResourceTemplateResolver templateResolver(){
@@ -67,6 +71,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(sessionCheckIntercepter).addPathPatterns("/", "/detail/{displayInfoId}");
+		registry.addInterceptor(logIntercepter);
 	}
 
 }

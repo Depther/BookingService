@@ -84,4 +84,48 @@ public class ReservationsSqls {
 			"UPDATE reservation_info" +
 			"   SET cancel_flag = 1" +
 			" WHERE id = :reservationInfoId";
+
+	public static String INSERT_COMMENT =
+			"INSERT INTO reservation_user_comment " +
+			"(product_id, reservation_info_id, score, comment, create_date, modify_date) " +
+			"VALUES " +
+			"(:productId, :reservationInfoId, :score, :comment, now(), now())";
+
+	public static String INSERT_COMMENT_FILE =
+			"INSERT INTO file_info " +
+			"(file_name, save_file_name, content_type, delete_flag, create_date, modify_date) " +
+			"VALUES " +
+			"(:fileName, :saveFileName, :contentType, 0, now(), now())";
+
+	public static String INSERT_COMMENT_IMAGE =
+			"INSERT INTO reservation_user_comment_image " +
+			"(reservation_info_id, reservation_user_comment_id, file_id) " +
+			"VALUES " +
+			"(:reservationInfoId, :reservationUserCommentId, :fileId)";
+
+	public static String SELECT_COMMENT_RESPONSE = 
+			"SELECT id as commentId," +
+			"       product_id as productId," +
+			"       reservation_info_id as reservationInfoId," +
+			"       score," +
+			"       comment," +
+			"       create_date as createDate," +
+			"       modify_date as modifyDate" +
+			"  FROM reservation_user_comment" +
+			" WHERE id = :commentId";
+
+	public static String SELECT_COMMENT_IMAGE = 
+			"SELECT A.id as imageId," +
+			"       A.reservation_info_id as reservationInfoId," +
+			"       A.reservation_user_comment_id as reservationUserCommentId," +
+			"       A.file_id as fileId," +
+			"       B.file_name as fileName," +
+			"       B.save_file_name as saveFileName," +
+			"       B.content_type as contentType," +
+			"       B.delete_flag as deleteFlag," +
+			"       B.create_date as createDate," +
+			"       B.modify_date as modifyDate" +
+			"  FROM reservation_user_comment_image as A" +
+			" INNER JOIN file_info as B ON A.file_id = B.id" +
+			" WHERE A.id = :imageId;";
 }
