@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -56,7 +57,8 @@ public class ReservationsController {
 	@GetMapping("/commentImage/{commentImageId}")
 	public void getCommnetImageHandler(@PathVariable("commentImageId") int commentImageId, HttpServletResponse response) throws Exception {
 		CommentImage commentImage = reservationsService.selectCommentImage(commentImageId);
-		response.setHeader("Content-Disposition", "attachment; filename=" + commentImage.getFileName());
+		System.out.println(commentImage);
+		response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(commentImage.getFileName(), "utf-8") + ";");
 		try (InputStream inputStream = new FileInputStream(commentImage.getSaveFileName());
 			 OutputStream outputStream = response.getOutputStream()) {
 			int readCount = 0;

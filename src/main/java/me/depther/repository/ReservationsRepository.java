@@ -100,14 +100,11 @@ public class ReservationsRepository {
 		return keyHolder.getKey().intValue();
 	}
 
-	public CommentResponse selectCommentResponse(int commentId, int imageId) throws Exception {
-		CommentResponse commentResponse = jdbcTemplate.queryForObject(SELECT_COMMENT_RESPONSE, Collections.singletonMap("commentId", commentId), commentResponseRowMapper);
-		CommentImage commentImage = jdbcTemplate.queryForObject(SELECT_COMMENT_IMAGE, Collections.singletonMap("imageId", imageId), commentImageRowMapper);
-		commentResponse.setCommentImage(commentImage);
-		return commentResponse;
+	public CommentResponse selectCommentResponse(int commentId) throws Exception {
+		return jdbcTemplate.queryForObject(SELECT_COMMENT_RESPONSE, Collections.singletonMap("commentId", commentId), commentResponseRowMapper);
 	}
 
-	public CommentImage selectCommentImage(int commentImageId) {
+	public CommentImage selectCommentImage(int commentImageId) throws Exception {
 		return jdbcTemplate.queryForObject(SELECT_COMMENT_IMAGE, Collections.singletonMap("imageId", commentImageId), commentImageRowMapper);
 	}
 }

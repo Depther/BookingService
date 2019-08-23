@@ -51,32 +51,39 @@ public class ReservationsServiceImpl implements ReservationsService {
 	@Override
 	@Transactional
 	public CommentResponse insertComment(long productId, long reservationInfoId, String comment, int score, MultipartFile file) throws Exception {
-		int delimiterIdx = file.getOriginalFilename().lastIndexOf(".");
-		String fileName = file.getOriginalFilename().substring(0, delimiterIdx);
-		String fileExtension = file.getOriginalFilename().substring(delimiterIdx);
-		String dateTimeStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-		String saveFileName = storageRoute + fileName + "_" + dateTimeStr + fileExtension;
-		if (fileExtension.toLowerCase() != "jpg" || fileExtension.toLowerCase() != "png") {
-			throw new UnSupportedFileException();
-		}
-		try (InputStream inputStream = file.getInputStream();
-			 OutputStream outputStream = new FileOutputStream(saveFileName)) {
-			int readCount = 0;
-			byte[] buffer = new byte[1024];
-			while ((readCount = inputStream.read(buffer)) != -1) {
-				outputStream.write(buffer, 0, readCount);
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+		int imageId = -1;
 		int commentId = reservationsRepository.insertComment(productId, reservationInfoId, comment, score);
-		int fileId = reservationsRepository.insertCommentFile(file.getOriginalFilename(), saveFileName, file.getContentType());
-		int imageId = reservationsRepository.insertCommentImage(reservationInfoId, commentId, fileId);
-		return reservationsRepository.selectCommentResponse(commentId, imageId);
+		if (file != null) {
+			int delimiterIdx = file.getOriginalFilename().lastIndexOf(".");
+			String fileName = file.getOriginalFilename().substring(0, delimiterIdx);
+			String fileExtension = file.getOriginalFilename().substring(delimiterIdx + 1);
+			String dateTimeStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+			String saveFileName = storageRoute + fileName + "_" + dateTimeStr + fileExtension;
+			if (!fileExtension.toLowerCase().equals("jpg") && !fileExtension.toLowerCase().equals("png")) {
+				throw new UnSupportedFileException();
+			}
+			try (InputStream inputStream = file.getInputStream();
+				 OutputStream outputStream = new FileOutputStream(saveFileName)) {
+				int readCount = 0;
+				byte[] buffer = new byte[1024];
+				while ((readCount = inputStream.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, readCount);
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			int fileId = reservationsRepository.insertCommentFile(file.getOriginalFilename(), saveFileName, file.getContentType());
+			imageId = reservationsRepository.insertCommentImage(reservationInfoId, commentId, fileId);
+		}
+
+		CommentResponse commentResponse = reservationsRepository.selectCommentResponse(commentId);
+		if (imageId != -1)
+			commentResponse.setCommentImage(reservationsRepository.selectCommentImage(imageId));
+		return commentResponse;
 	}
 
 	@Override
-	public CommentImage selectCommentImage(int commentImageId) {
+	public CommentImage selectCommentImage(int commentImageId) throws Exception {
 		return reservationsRepository.selectCommentImage(commentImageId);
 	}
 }

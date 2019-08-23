@@ -13,5 +13,5 @@ public interface ReservationsService {
 
 	CommentResponse insertComment(long productId, long reservationInfoId, String comment, int score, MultipartFile file) throws Exception;
 
-	CommentImage selectCommentImage(int commentImageId);
+	CommentImage selectCommentImage(int commentImageId) throws Exception;
 }

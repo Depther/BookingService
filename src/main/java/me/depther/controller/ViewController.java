@@ -47,9 +47,4 @@ public class ViewController {
 		return "reviewWrite";
 	}
 
-	@GetMapping("/test")
-	public String test() {
-		return "test";
-	}
-
 }

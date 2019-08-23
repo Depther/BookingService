@@ -328,8 +328,8 @@ BookingRequest.prototype.getReservationPrice = function() {
 // 수신한 응답을 처리하는 콜백 메소드
 BookingRequest.prototype.responseHandler = function(xhr, client) {
 	const response = JSON.parse(xhr.responseText);
-	if (!response.reservationInfoId) {
-		alert("예매에 실패하였습니다. 다시 시도해주세요.");
+	if (response.status) {
+		alert(response.message);
 		return;
 	}
 	alert("예매가 완료되었습니다.");

@@ -183,8 +183,12 @@ ReviewRegister.prototype.setRegistBtnListener = function() {
 
 // 리뷰 등록 완료 후 예약 내역 페이지로 이동시키는 메소드
 ReviewRegister.prototype.responseHandler = function(xhr, client) {
-	console.log(JSON.parse(xhr.responseText));
-	// window.location.href = "/myReservation?reservationEmail=" + client.reservationEmail;
+	const response = JSON.parse(xhr.responseText);
+	if (response.status) {
+		alert(response.message);
+		return;
+	}
+	window.location.href = "/myReservation?reservationEmail=" + client.reservationEmail;
 };
 
 // 메인 함수
