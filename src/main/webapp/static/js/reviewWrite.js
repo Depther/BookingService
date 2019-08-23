@@ -111,12 +111,15 @@ Review.prototype.setReviewWriteListener = function() {
 		if (textarea.value == "")
 			info.style.display = "block";
 	});
-	textarea.addEventListener("keyup", () => {
-		const length = textarea.value.length;
-		if (length >= maxLen) {
-			textarea.value = textarea.value.substring(0, maxLen);
-		}
-		textCnt.textContent = length;
+	textarea.addEventListener("keydown", () => {
+		setTimeout(() => {
+			let length = textarea.value.length;
+			if (length >= maxLen) {
+				textarea.value = textarea.value.substring(0, maxLen);
+				length = maxLen;
+			}
+			textCnt.textContent = length;
+		}, 0);
 	})
 };
 
@@ -165,14 +168,17 @@ ReviewRegister.prototype.executeProcess = function() {
 ReviewRegister.prototype.setRegistBtnListener = function() {
 	const registBtn = document.querySelector(".bk_btn");
 	registBtn.addEventListener("click", () => {
-		const point = document.querySelector(".star_rank").textContent;
+		const score = document.querySelector(".star_rank").textContent;
 		const comment = document.querySelector(".review_textarea").value;
 		const productId = this.response.displayInfo.productId;
-		const requestURI = "/api/reservations/" + this.reservationInfoId + "/comments?comment=" + comment + "&productId=" + productId + "&score=" + point;
+		const requestURI = "/api/reservations/" + this.reservationInfoId + "/comments";
 		const fileElement = document.querySelector("#reviewImageFileOpenInput");
 		const formData = new FormData();
 		formData.append("reviewImage", fileElement.files[0]);
-		if (point !== "0" && comment.length >= 5 && comment.length <= 400) {
+		formData.append("score", score);
+		formData.append("comment", comment);
+		formData.append("productId", productId);
+		if (score !== "0" && comment.length >= 5 && comment.length <= 400) {
 			const requestSender = new RequestSender(this, "post", requestURI, formData, this.responseHandler);
 			requestSender.sendRequest();
 		} else {

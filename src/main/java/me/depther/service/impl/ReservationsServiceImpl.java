@@ -22,7 +22,7 @@ public class ReservationsServiceImpl implements ReservationsService {
 	@Autowired
 	private ReservationsRepository reservationsRepository;
 
-	private String storageRoute = "/app_storage/boostcourse/";
+	private static String STORAGE_ROUTE = "/app_storage/boostcourse/";
 
 	@Override
 	@Transactional
@@ -58,7 +58,7 @@ public class ReservationsServiceImpl implements ReservationsService {
 			String fileName = file.getOriginalFilename().substring(0, delimiterIdx);
 			String fileExtension = file.getOriginalFilename().substring(delimiterIdx + 1);
 			String dateTimeStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-			String saveFileName = storageRoute + fileName + "_" + dateTimeStr + fileExtension;
+			String saveFileName = STORAGE_ROUTE + fileName + "_" + dateTimeStr + "." + fileExtension;
 			if (!fileExtension.toLowerCase().equals("jpg") && !fileExtension.toLowerCase().equals("png")) {
 				throw new UnSupportedFileException();
 			}
