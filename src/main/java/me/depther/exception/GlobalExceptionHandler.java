@@ -1,5 +1,6 @@
 package me.depther.exception;
 
+import me.depther.model.ExceptionResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +36,17 @@ public class GlobalExceptionHandler extends RuntimeException {
 		return new ExceptionResponse(HttpStatus.NO_CONTENT, env.getProperty("message.error.no-content"));
 	}
 
+	@ExceptionHandler(UnSupportedFileException.class)
+	public ExceptionResponse unSupportedFileException(Exception e) throws Exception{
+		logger.error(e.toString());
+		e.printStackTrace();
+		return new ExceptionResponse(HttpStatus.BAD_REQUEST, env.getProperty("message.error.unsupported-file-exception"));
+	}
+
+	@ExceptionHandler(FileDownloadException.class)
+	public ExceptionResponse fileDownloadException(Exception e) throws Exception {
+		logger.error(e.toString());
+		e.printStackTrace();
+		return new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, env.getProperty("message.error.file-download-exception"));
+	}
 }

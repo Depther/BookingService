@@ -55,14 +55,17 @@ let responseObj = {
 		this.setReserveBtn();
 		this.setCommentsInfo(false);
 		this.setCommentsList(false);
+		this.setCommentImageDownloader();
 		this.setInformationBtn();
 		this.setDetailInfo();
 	},
+	// Review 페이지 전체 프로세스 진행 메소드
 	executeReviewProcess: function() {
 		this.setTitle();
 		this.setCommentsInfo(true);
 		this.setCommentsList(true);
 		this.setBackBtn();
+		this.setCommentImageDownloader();
 	},
 	// 상품 메인 이미지에 대한 처리를 하는 메소드
 	setMainImages: function() {
@@ -71,7 +74,7 @@ let responseObj = {
 		let mainImgTarget = document.querySelector(".visual_img.detail_swipe");
 		this.productImages.forEach(function(item) {
 			let data = {
-				"saveFileName": item.saveFileName,
+				"fileId": item.fileInfoId,
 				"productDescription": this.displayInfo.productDescription
 			};
 			let resultHTML = mainImgBindMethod(data);
@@ -151,13 +154,24 @@ let responseObj = {
 			commentResultHTML = commentBindMethod(data);
 			commentTarget.insertAdjacentHTML("beforeend", commentResultHTML);
 			if (item.commentImages.length > 0) {
-				data = {"saveFileName": item.commentImages[0].saveFileName};
+				data = {"imageId": item.commentImages[0].imageId};
 				let imageResultHTML = commentImgBindMethod(data);
 				let imageTarget = document.querySelector(".list_short_review > .list_item:last-child .review_area");
 				imageTarget.classList.remove("no_img");
 				imageTarget.insertAdjacentHTML("afterbegin", imageResultHTML);
 			}
 		}
+	},
+	// 이미지 클릭 시 다운로드 설정 메소드
+	setCommentImageDownloader: function() {
+		const reviewBox = document.querySelector(".review_box");
+		reviewBox.addEventListener("click", (e) => {
+			if (e.target.getAttribute("class") === "thumb") {
+				console.log("2222");
+				const requestURI = e.target.firstElementChild.getAttribute("src");
+				window.location.pathname = requestURI;
+			}
+		});
 	},
 	// 상세정보 버튼 이벤트 설정 메소드
 	setInformationBtn: function() {

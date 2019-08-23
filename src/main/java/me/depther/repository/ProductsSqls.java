@@ -27,7 +27,7 @@ class ProductsSqls {
 			"       B.content as productContent," +
 			"       B.description as productDescription," +
 			"       B.id as productId," +
-			"       E.save_file_name as productImageUrl" +
+			"       E.id as fileId" +
 			"  FROM category A" +
 			" INNER JOIN product B ON A.id = B.category_id" +
 			" INNER JOIN display_info C ON B.id = C.product_id" +
@@ -43,7 +43,7 @@ class ProductsSqls {
 			"       B.content as productContent," +
 			"       B.description as productDescription," +
 			"       B.id as productId," +
-			"       E.save_file_name as productImageUrl" +
+			"       E.id as fileId" +
 			"  FROM category A" +
 			" INNER JOIN product B ON A.id = B.category_id" +
 			" INNER JOIN display_info C ON B.id = C.product_id" +

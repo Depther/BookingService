@@ -12,7 +12,7 @@ public class Product {
 
 	private int productId;
 
-	private String productImageUrl;
+	private int fileId;
 
 	public int getDisplayInfoId() {
 		return displayInfoId;
@@ -54,12 +54,12 @@ public class Product {
 		this.productId = productId;
 	}
 
-	public String getProductImageUrl() {
-		return productImageUrl;
+	public int getFileId() {
+		return fileId;
 	}
 
-	public void setProductImageUrl(String productImageUrl) {
-		this.productImageUrl = productImageUrl;
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
 	}
 
 	@Override
@@ -70,7 +70,8 @@ public class Product {
 				", productContent='" + productContent + '\'' +
 				", productDescription='" + productDescription + '\'' +
 				", productId=" + productId +
-				", productImageUrl='" + productImageUrl + '\'' +
+				", fileId=" + fileId +
 				'}';
 	}
+
 }

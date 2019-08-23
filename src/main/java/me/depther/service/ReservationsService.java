@@ -1,12 +1,7 @@
 package me.depther.service;
 
-import me.depther.model.CommentResponse;
-import me.depther.model.ReservationInfoResponse;
-import me.depther.model.ReservationParam;
-import me.depther.model.ReservationResponse;
+import me.depther.model.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 
 public interface ReservationsService {
 
@@ -18,4 +13,5 @@ public interface ReservationsService {
 
 	CommentResponse insertComment(long productId, long reservationInfoId, String comment, int score, MultipartFile file) throws Exception;
 
+	CommentImage selectCommentImage(int commentImageId);
 }

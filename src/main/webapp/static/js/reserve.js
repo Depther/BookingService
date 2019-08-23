@@ -64,7 +64,7 @@ TopMenu.prototype.setMainImage = function() {
 	let lowestPrice = 0;
 	for (let item of this.response.productImages) {
 		if (item.saveFileName.includes("ma")) {
-			image.src = "/" + item.saveFileName;
+			image.src = "/api/download/image/" + item.fileInfoId;
 			break;
 		}
 	}

@@ -106,4 +106,8 @@ public class ReservationsRepository {
 		commentResponse.setCommentImage(commentImage);
 		return commentResponse;
 	}
+
+	public CommentImage selectCommentImage(int commentImageId) {
+		return jdbcTemplate.queryForObject(SELECT_COMMENT_IMAGE, Collections.singletonMap("imageId", commentImageId), commentImageRowMapper);
+	}
 }

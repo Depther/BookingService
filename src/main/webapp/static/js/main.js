@@ -23,7 +23,7 @@ class Promotions {
 		const template = document.querySelector("#template-promotion-item").textContent;
 		const addPosition = document.querySelector(".visual_img");
 		for (let item of this.response.items) {
-			const resultHTML = template.replace("{productImageUrl}", item.productImageUrl);
+			const resultHTML = template.replace("{fileId}", item.fileId);
 			addPosition.insertAdjacentHTML("beforeend", resultHTML);
 		}
 	}
@@ -126,7 +126,7 @@ class Products {
 			const resultHTML = template.replace("{productId}", item.productId)
 				                       .replace("{displayInfoId}", item.displayInfoId)
 				                       .replace(/{productDescription}/gi, item.productDescription)
-				                       .replace("{productImageUrl}", item.productImageUrl)
+				                       .replace("{fileId}", item.fileId)
 				                       .replace("{placeName}", item.placeName)
 				                       .replace("{productContent}", item.productContent);
 			addPosition.item(index % 2).insertAdjacentHTML("beforeend", resultHTML);

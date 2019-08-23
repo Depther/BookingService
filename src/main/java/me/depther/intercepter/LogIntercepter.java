@@ -22,4 +22,7 @@ public class LogIntercepter implements HandlerInterceptor {
 		logger.debug("요청 URL: {}, 요청 시간: {}, 클라이언트 IP: {}", request.getRequestURI(), requestDateTimeStr, IPUtil.getIp(request));
 		return true;
 	}
+
 }
+
+

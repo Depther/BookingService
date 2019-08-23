@@ -6,7 +6,7 @@ public class Promotion {
 
 	private int productId;
 
-	private String productImageUrl;
+	private int fileId;
 
 	public int getId() {
 		return id;
@@ -24,12 +24,12 @@ public class Promotion {
 		this.productId = productId;
 	}
 
-	public String getProductImageUrl() {
-		return productImageUrl;
+	public int getFileId() {
+		return fileId;
 	}
 
-	public void setProductImageUrl(String productImageUrl) {
-		this.productImageUrl = productImageUrl;
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
 	}
 
 	@Override
@@ -37,8 +37,7 @@ public class Promotion {
 		return "Promotion{" +
 				"id=" + id +
 				", productId=" + productId +
-				", productImageUrl='" + productImageUrl + '\'' +
+				", fileId=" + fileId +
 				'}';
 	}
-
 }
