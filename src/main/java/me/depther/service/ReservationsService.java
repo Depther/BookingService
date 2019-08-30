@@ -9,9 +9,9 @@ public interface ReservationsService {
 
 	ReservationInfoResponse selectReservationInfo(String reservationEmail) throws Exception;
 
-	ReservationResponse cancelReservation(long reservationInfoId) throws Exception;
+	ReservationResponse cancelReservation(int reservationInfoId) throws Exception;
 
-	CommentResponse insertComment(long productId, long reservationInfoId, String comment, int score, MultipartFile file) throws Exception;
+	CommentResponse insertComment(int productId, int reservationInfoId, String comment, int score, MultipartFile file) throws Exception;
 
 	CommentImage selectCommentImage(int commentImageId) throws Exception;
 }

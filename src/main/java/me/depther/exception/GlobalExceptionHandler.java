@@ -45,4 +45,11 @@ public class GlobalExceptionHandler extends RuntimeException {
 		logger.error(e.toString());
 		return new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, env.getProperty("message.error.file-download-exception"));
 	}
+
+	@ExceptionHandler(FileUploadException.class)
+	public ExceptionResponse fileUploadException(Exception e) throws Exception {
+		logger.error(e.toString());
+		return new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, env.getProperty("message.error.file-upload-exception"));
+	}
+
 }

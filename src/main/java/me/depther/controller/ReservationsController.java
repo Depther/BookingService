@@ -41,12 +41,12 @@ public class ReservationsController {
 	}
 
 	@PutMapping("/{reservationInfoId}")
-	public ReservationResponse putReservationHandler(@PathVariable(name="reservationInfoId") long reservationInfoId) throws Exception {
+	public ReservationResponse putReservationHandler(@PathVariable(name="reservationInfoId") int reservationInfoId) throws Exception {
 		return reservationsService.cancelReservation(reservationInfoId);
 	}
 
 	@PostMapping("/{reservationInfoId}/comments")
-	public CommentResponse postCommentHandler(@PathVariable("reservationInfoId") long reservationInfoId,
+	public CommentResponse postCommentHandler(@PathVariable("reservationInfoId") int reservationInfoId,
 											  @RequestParam(value = "reviewImage", required = false) MultipartFile file,
 											  @RequestParam("comment") String comment,
 											  @RequestParam("productId") int productId,

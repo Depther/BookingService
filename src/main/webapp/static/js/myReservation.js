@@ -120,7 +120,7 @@ ConfirmedItem.prototype.setCancelBtnListener = function() {
 	const confirmedList = document.querySelector(".card.confirmed");
 	const cancelPopup = document.querySelector(".popup_booking_wrapper");
 	confirmedList.addEventListener("click", (e) => {
-		if (e.target.tagName === "BUTTON" || (e.target.tagNa요me === "SPAN" && e.target.parentElement.tagName === "BUTTON")) {
+		if (e.target.tagName === "BUTTON" || (e.target.tagName === "SPAN" && e.target.parentElement.tagName === "BUTTON")) {
 			this.cancelItem = e.target.closest(".card_item");
 			cancelPopup.querySelector(".pop_tit").firstElementChild.textContent = this.cancelItem.querySelector(".tit").textContent;
 			cancelPopup.style.display = "block";

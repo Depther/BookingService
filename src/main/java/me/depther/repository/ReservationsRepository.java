@@ -36,13 +36,13 @@ public class ReservationsRepository {
 
 	private RowMapper<CommentImage> commentImageRowMapper = BeanPropertyRowMapper.newInstance(CommentImage.class);
 
-	public Long insertReservationInfo(ReservationParam reservationParam) throws Exception {
+	public int insertReservationInfo(ReservationParam reservationParam) throws Exception {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(INSERT_RESERVATION_INFO, new BeanPropertySqlParameterSource(reservationParam), keyHolder);
-		return (Long)keyHolder.getKey();
+		return keyHolder.getKey().intValue();
 	}
 
-	public void insertReservationInfoPrice(ReservationParam reservationParam, Long reservationInfoId) throws Exception {
+	public void insertReservationInfoPrice(ReservationParam reservationParam, int reservationInfoId) throws Exception {
 		for (ReservationPrice price : reservationParam.getPrices()) {
 			jdbcTemplate.update(INSERT_RESERVATION_INFO_PRICE, new MapSqlParameterSource()
 					.addValue("reservationInfoId", reservationInfoId)
@@ -51,8 +51,8 @@ public class ReservationsRepository {
 		}
 	}
 
-	public ReservationResponse selectReservationResponse(Long reservationInfoId) throws Exception {
-		Map<String, Long> map = new HashMap<>();
+	public ReservationResponse selectReservationResponse(int reservationInfoId) throws Exception {
+		Map<String, Integer> map = new HashMap<>();
 		map.put("reservationInfoId", reservationInfoId);
 		ReservationResponse reservationResponse = jdbcTemplate.queryForObject(SELECT_RESERVATION_RESULT, map, reservationResponseRowMapper);
 		List<ReservationPrice> reservationPrices = jdbcTemplate.query(SELECT_RESERVATION_INFO_PRICE, map, reservationInfoPriceRowMapper);
@@ -68,11 +68,11 @@ public class ReservationsRepository {
 		return jdbcTemplate.queryForObject(SELECT_DISPLAY_INFOS, Collections.singletonMap("displayInfoId", displayInfoId) , displayInfoRowMapper);
 	}
 
-	public void cancelReservation(long reservationInfoId) throws Exception {
+	public void cancelReservation(int reservationInfoId) throws Exception {
 		jdbcTemplate.update(CANCEL_RESERVATION, Collections.singletonMap("reservationInfoId", reservationInfoId));
 	}
 
-	public int insertComment(long productId, long reservationInfoId, String comment, int score) throws Exception {
+	public int insertComment(int productId, int reservationInfoId, String comment, int score) throws Exception {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(INSERT_COMMENT, new MapSqlParameterSource()
 				.addValue("productId", productId)
@@ -91,7 +91,7 @@ public class ReservationsRepository {
 		return keyHolder.getKey().intValue();
 	}
 
-	public int insertCommentImage(long reservationInfoId, int commentId, int fileId) throws Exception {
+	public int insertCommentImage(int reservationInfoId, int commentId, int fileId) throws Exception {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		jdbcTemplate.update(INSERT_COMMENT_IMAGE, new MapSqlParameterSource()
 				.addValue("reservationInfoId", reservationInfoId)
@@ -107,4 +107,5 @@ public class ReservationsRepository {
 	public CommentImage selectCommentImage(int commentImageId) throws Exception {
 		return jdbcTemplate.queryForObject(SELECT_COMMENT_IMAGE, Collections.singletonMap("imageId", commentImageId), commentImageRowMapper);
 	}
+
 }
