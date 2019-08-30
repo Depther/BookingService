@@ -1,7 +1,5 @@
 package me.depther.model;
 
-import java.util.List;
-
 public class ReservationInfo {
 
 	private boolean cancelYn;

@@ -52,7 +52,7 @@ public class ReservationsRepository {
 	}
 
 	public ReservationResponse selectReservationResponse(Long reservationInfoId) throws Exception {
-		Map<String, Long> map = new HashMap();
+		Map<String, Long> map = new HashMap<>();
 		map.put("reservationInfoId", reservationInfoId);
 		ReservationResponse reservationResponse = jdbcTemplate.queryForObject(SELECT_RESERVATION_RESULT, map, reservationResponseRowMapper);
 		List<ReservationPrice> reservationPrices = jdbcTemplate.query(SELECT_RESERVATION_INFO_PRICE, map, reservationInfoPriceRowMapper);

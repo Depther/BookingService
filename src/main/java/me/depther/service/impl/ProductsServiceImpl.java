@@ -14,16 +14,16 @@ public class ProductsServiceImpl implements ProductsService {
 	@Autowired
 	private ProductsRepository productsRepository;
 
-	private int wholeCategory = 0;
+	private static final int WHOLE_CATEGORY = 0;
 
 	@Override
 	public ProductResponse getProducts(int categoryId, int start) throws Exception {
 		ProductResponse response = new ProductResponse();
-		if (categoryId == wholeCategory) {
+		if (categoryId == WHOLE_CATEGORY) {
 			response.setTotalCount(productsRepository.selectAllCount());
 			response.setItems(productsRepository.selectAllList(start));
 		}
-		if (categoryId != wholeCategory) {
+		if (categoryId != WHOLE_CATEGORY) {
 			response.setTotalCount(productsRepository.selectPartCount(categoryId));
 			response.setItems(productsRepository.selectPartList(categoryId, start));
 		}

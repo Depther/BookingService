@@ -25,28 +25,24 @@ public class GlobalExceptionHandler extends RuntimeException {
 	@ExceptionHandler(RuntimeException.class)
 	public ExceptionResponse runtimeExceptionHandler(Exception e) throws Exception {
 		logger.error(e.toString());
-		e.printStackTrace();
 		return new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, env.getProperty("message.error.runtime-exception"));
 	}
 
 	@ExceptionHandler(EmptyResultDataAccessException.class)
 	public ExceptionResponse noContentExceptionHandler(HttpServletResponse response, Exception e) throws Exception {
 		logger.error(e.toString());
-		e.printStackTrace();
 		return new ExceptionResponse(HttpStatus.NO_CONTENT, env.getProperty("message.error.no-content"));
 	}
 
 	@ExceptionHandler(UnSupportedFileException.class)
 	public ExceptionResponse unSupportedFileException(Exception e) throws Exception{
 		logger.error(e.toString());
-		e.printStackTrace();
 		return new ExceptionResponse(HttpStatus.BAD_REQUEST, env.getProperty("message.error.unsupported-file-exception"));
 	}
 
 	@ExceptionHandler(FileDownloadException.class)
 	public ExceptionResponse fileDownloadException(Exception e) throws Exception {
 		logger.error(e.toString());
-		e.printStackTrace();
 		return new ExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR, env.getProperty("message.error.file-download-exception"));
 	}
 }
