@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 @RestController
 @RequestMapping("/api/download")
@@ -24,8 +25,7 @@ public class DownloadController {
 	@GetMapping("/image/{fileId}")
 	public void donwloadImageHandler(@PathVariable("fileId") int fileId, HttpServletResponse response) throws Exception {
 		ImageFile imageFile = downloadService.downloadImage(fileId);
-		String fileName = imageFile.getFileName();
-		response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+		response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(imageFile.getFileName(), "utf-8") + ";");
 		try (InputStream inputStream = new FileInputStream(imageFile.getSaveFileName());
 			 OutputStream outputStream = response.getOutputStream()) {
 			int readCount = 0;

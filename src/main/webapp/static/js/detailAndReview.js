@@ -145,7 +145,7 @@ let responseObj = {
 			commentResultHTML = commentBindMethod(data);
 			commentTarget.insertAdjacentHTML("beforeend", commentResultHTML);
 			if (item.commentImages.length > 0) {
-				data = {"imageId": item.commentImages[0].imageId};
+				data = {"fileId": item.commentImages[0].fileId};
 				let imageResultHTML = commentImgBindMethod(data);
 				let imageTarget = document.querySelector(".list_short_review > .list_item:last-child .review_area");
 				imageTarget.classList.remove("no_img");
@@ -158,7 +158,6 @@ let responseObj = {
 		const reviewBox = document.querySelector(".review_box");
 		reviewBox.addEventListener("click", (e) => {
 			if (e.target.getAttribute("class") === "thumb") {
-				console.log("2222");
 				const requestURI = e.target.firstElementChild.getAttribute("src");
 				window.location.pathname = requestURI;
 			}

@@ -54,16 +54,13 @@ public class ReservationsServiceImpl implements ReservationsService {
 	public CommentResponse insertComment(int productId, int reservationInfoId, String comment, int score, MultipartFile file) throws Exception {
 		int commentId = reservationsRepository.insertComment(productId, reservationInfoId, comment, score);
 		CommentResponse commentResponse = reservationsRepository.selectCommentResponse(commentId);
+
 		if (file != null) {
 			int imageId = insertCommentFile(file, reservationInfoId, commentId);
 			commentResponse.setCommentImage(reservationsRepository.selectCommentImage(imageId));
 		}
-		return commentResponse;
-	}
 
-	@Override
-	public CommentImage selectCommentImage(int commentImageId) throws Exception {
-		return reservationsRepository.selectCommentImage(commentImageId);
+		return commentResponse;
 	}
 
 	private int insertCommentFile(MultipartFile file, int reservationInfoId, int commentId) throws Exception {
@@ -72,9 +69,12 @@ public class ReservationsServiceImpl implements ReservationsService {
 		String fileExtension = file.getOriginalFilename().substring(delimiterIdx + 1);
 		String dateTimeStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 		String saveFileName = STORAGE_ROUTE + fileName + "_" + dateTimeStr + "." + fileExtension;
-		if (!fileExtension.toLowerCase().equals("jpg") && !fileExtension.toLowerCase().equals("png")) {
+		String fileContentType = file.getContentType();
+
+		if (!fileContentType.endsWith("jpeg") && !fileContentType.endsWith("png")) {
 			throw new UnSupportedFileException();
 		}
+
 		try (InputStream inputStream = file.getInputStream();
 			 OutputStream outputStream = new FileOutputStream(saveFileName)) {
 			int readCount = 0;
@@ -85,6 +85,7 @@ public class ReservationsServiceImpl implements ReservationsService {
 		} catch(Exception e) {
 			throw new FileUploadException();
 		}
+
 		int fileId = reservationsRepository.insertCommentFile(file.getOriginalFilename(), saveFileName, file.getContentType());
 		return reservationsRepository.insertCommentImage(reservationInfoId, commentId, fileId);
 	}

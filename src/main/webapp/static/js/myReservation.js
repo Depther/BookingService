@@ -5,7 +5,7 @@ function DataRequest() {
 	this.reservationEmailParam = "";
 }
 
-// 전체 프로세스 진행 메소드
+// DataRequest 전체 프로세스 진행 메소드
 DataRequest.prototype.executeProcess = function() {
 	this.getAPIParam();
 	this.callSendRequest();
@@ -28,8 +28,8 @@ DataRequest.prototype.callSendRequest = function() {
 DataRequest.prototype.responseHandler = function(xhr) {
 	const response = JSON.parse(xhr.responseText);
 	if (response.size === 0) {
-		alert("예매 내역이 존재하지 않습니다.");
-		window.location.href = "/";
+		document.querySelector(".err").style.display = "block";
+		return;
 	}
 	new TopMenu(response).executeProcess();
 	new ConfirmedItem(response).executeProcess();
@@ -42,7 +42,7 @@ function TopMenu(response) {
 	this.response = response;
 }
 
-// 전체 프로세스 진행 메소드
+// TopMenu 전체 프로세스 진행 메소드
 TopMenu.prototype.executeProcess = function() {
 	this.setEmailInfo();
 	this.printSummaryInfo();
@@ -85,7 +85,7 @@ function ConfirmedItem(response) {
 	this.response = response;
 }
 
-// 전체 프로세스 진행 메소드
+// ConfirmedItem 전체 프로세스 진행 메소드
 ConfirmedItem.prototype.executeProcess = function() {
 	this.methodType = "PUT";
 	this.requestURI = "/api/reservations/";
@@ -107,7 +107,8 @@ ConfirmedItem.prototype.addItems = function() {
 				reservationInfoId: "No." + String(item.reservationInfoId).padStart(7, '0'),
 				productDescription: item.displayInfo.productDescription,
 				placeName: item.displayInfo.placeName,
-				totalPrice: Number(item.totalPrice).toLocaleString('en')
+				totalPrice: Number(item.totalPrice).toLocaleString('en'),
+				reservationDate: item.reservationDate.substring(0, 10).replace(/-/g, ".")
 			};
 			const resultHTML = bindTemplate(data);
 			addLocation.insertAdjacentHTML("beforeend", resultHTML);
@@ -171,10 +172,9 @@ ConfirmedItem.prototype.responseHandler = function(xhr, client) {
 // 이용 완료 내역을 담당하는 클래스
 function UsedItem(response) {
 	this.response = response;
-	this.setReviewBtnListener();
 }
 
-// 전체 프로세스 진행 메소드
+// UsedItem 전체 프로세스 진행 메소드
 UsedItem.prototype.executeProcess = function() {
 	this.addItems();
 };
@@ -193,7 +193,8 @@ UsedItem.prototype.addItems = function() {
 				totalPrice: Number(item.totalPrice).toLocaleString('en'),
 				displayInfoId: item.displayInfo.displayInfoId,
 				reservationInfoIdParam: item.reservationInfoId,
-				reservationEmail: item.reservationEmail
+				reservationEmail: item.reservationEmail,
+				reservationDate: item.reservationDate.substring(0, 10).replace(/-/g, ".")
 			};
 			const resultHTML = bindTemplate(data);
 			addLocation.insertAdjacentHTML("beforeend", resultHTML);
@@ -201,17 +202,12 @@ UsedItem.prototype.addItems = function() {
 	}
 };
 
-// 리뷰 남기기 버튼 리스너 설정 메소드
-UsedItem.prototype.setReviewBtnListener = function() {
-
-};
-
 // 취소된 내역을 담당하는 클래스
 function CanceledItem(response) {
 	this.response = response;
 }
 
-// 전체 프로세스 진행 메소드
+// CanceledItem 전체 프로세스 진행 메소드
 CanceledItem.prototype.executeProcess = function() {
 	this.addItems();
 };
@@ -228,13 +224,13 @@ CanceledItem.prototype.addItems = function() {
 				productDescription: item.displayInfo.productDescription,
 				placeName: item.displayInfo.placeName,
 				totalPrice: Number(item.totalPrice).toLocaleString('en'),
+				reservationDate: item.reservationDate.substring(0, 10).replace(/-/g, ".")
 			};
 			const resultHTML = bindTemplate(data);
 			addLocation.insertAdjacentHTML("beforeend", resultHTML);
 		}
 	}
 };
-
 
 // 메인 함수
 document.addEventListener("DOMContentLoaded", () => {
