@@ -185,9 +185,9 @@ Reservation.prototype.setTicketBtnEventListener = function() {
 // 사용자 입력값에 대한 Validation 체크를 설정하는 메소드
 Reservation.prototype.setInputValueChecker = function() {
 	const NAME_REGEXP = /[a-zA-Z0-9]|[ \[\]{}()<>?|`~!@#$%^&*\-_+=,.;:\"'\\]/g;
-	const TEL_REGEXP = /^\d{3}-\d{3,4}-\d{4}$/;
-	const NO_DASH_TEL_REGEXP = /^\d{3}\d{3,4}\d{4}$/;
-	const EMAIL_REGEXP = /^[a-zA-Z0-9\.]{1,30}@[a-zA-Z]+\.(([a-zA-Z]+\.[a-zA-Z]+)|([a-zA-Z]+))$/;
+	const TEL_REGEXP = /^\d{2,3}-\d{3,4}-\d{4}$/;
+	const NO_DASH_TEL_REGEXP = /^\d{2,3}\d{3,4}\d{4}$/;
+	const EMAIL_REGEXP = /^[a-zA-Z0-9\.\-\_]{1,30}@[a-zA-Z]+\.(([a-zA-Z]+\.[a-zA-Z]+)|([a-zA-Z]+))$/;
 	const name = document.querySelector("#name");
 	const tel = document.querySelector("#tel");
 	const email = document.querySelector("#email");
@@ -201,9 +201,15 @@ Reservation.prototype.setInputValueChecker = function() {
 	});
 	tel.addEventListener("focusout", () => {
 		if (NO_DASH_TEL_REGEXP.test(tel.value)) {
-			if (tel.value.length == 10) {
+			if (tel.value.substring(0, 2) === "02") {
+				if (tel.value.length === 9) {
+					tel.value = tel.value.substr(0, 2) + "-" + tel.value.substr(2, 3) + "-" + tel.value.substr(5, 4);
+				} else if (tel.value.length === 10) {
+					tel.value = tel.value.substr(0, 2) + "-" + tel.value.substr(2, 4) + "-" + tel.value.substr(6, 4);
+				}
+			} else if (tel.value.length === 10) {
 				tel.value = tel.value.substr(0, 3) + "-" + tel.value.substr(3, 3) + "-" + tel.value.substr(6, 4);
-			} else if (tel.value.length == 11) {
+			} else if (tel.value.length === 11) {
 				tel.value = tel.value.substr(0, 3) + "-" + tel.value.substr(3, 4) + "-" + tel.value.substr(7, 4);
 			}
 		}

@@ -124,6 +124,7 @@ ConfirmedItem.prototype.setCancelBtnListener = function() {
 		if (e.target.tagName === "BUTTON" || (e.target.tagName === "SPAN" && e.target.parentElement.tagName === "BUTTON")) {
 			this.cancelItem = e.target.closest(".card_item");
 			cancelPopup.querySelector(".pop_tit").firstElementChild.textContent = this.cancelItem.querySelector(".tit").textContent;
+			cancelPopup.querySelector(".pop_tit").lastElementChild.textContent = this.cancelItem.querySelector(".item:first-child .item_dsc").textContent;
 			cancelPopup.style.display = "block";
 		}
 	});

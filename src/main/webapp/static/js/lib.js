@@ -20,6 +20,7 @@ class RequestSender {
 	}
 }
 
+// JavaScript Date 타입을 yyyymmdd 형태의 문자열로 반환
 class DateFormatter {
 	static makeDateString(date) {
 		const year = date.getFullYear();
@@ -28,6 +29,14 @@ class DateFormatter {
 		let day = date.getDate();
 		day = day >= 10 ? day : '0' + day;
 		return year + month + day;
+	}
+}
+
+// 이메일 형식이 적절한지 체크하는 클래스
+class EmailFormatChecker {
+	static checkEmailFormat(emailStr) {
+		const EMAIL_REGEXP = /^[a-zA-Z0-9\.\-\_]{1,30}@[a-zA-Z]+\.(([a-zA-Z]+\.[a-zA-Z]+)|([a-zA-Z]+))$/;
+		return EMAIL_REGEXP.test(emailStr);
 	}
 }
 
